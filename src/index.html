@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/src/img/favicon.png">
-    <link rel="stylesheet" href="/dist/output.css">    
-    <title>Pokedex</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="/src/img/favicon.png">
+	<link rel="stylesheet" href="/dist/output.css">    
+	<title>Pokedex</title>
 </head>
 <body>
-    <header class="flex justify-center w-full">
-        <img style="transform:scale(.65)"src="/src/img/poke_logo.png" alt="Pokedex logo">
-    </header>
+	<header class="flex justify-center w-full">
+		<img style="transform:scale(.65)"src="/src/img/poke_logo.png" alt="Pokedex logo">
+	</header>
 
-    <main class="flex justify-center align-middle bg-cover bg-main-pattern h-screen border-t-8 border-background">
-        <section id="pokemons-list" class="bg-white w-11/12 max-w-7xl shadow-2xl shadow-background " > <!-- probably max-w-screen-2xl-->
-        </section>
-    </main>
+	<main class="flex justify-center align-middle bg-cover bg-main-pattern h-screen border-t-8 border-background">
+	   
+		<section class="bg-white w-11/12 max-w-7xl shadow-2xl shadow-background" > <!-- probably max-w-screen-2xl-->
+		   
+			<div id="pokemons-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2">
+				
+				<div id="pokemon" class="flex flex-col align-middle justify-center bg-red-400 bg-ul-background bg-80% bg-center bg-no-repeat rounded-md m-2 p-4">
+					<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg" alt="" class="w-48 self-center">
+					<p class="text-center z-10 text-amber-500 mt-10">Pokemon</p>
+				</div>
+				
 
-    <footer>
-        
-    </footer>
-    
+			</div>
+
+		</section>
+	</main>
+
+	<footer>
+		
+	</footer>
+	
 </body>
 <script src="js/main.js"></script>
 </html>
