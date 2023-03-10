@@ -4,6 +4,9 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/x-icon" href="/src/img/favicon.png">
 	<link rel="stylesheet" href="/dist/output.css">    
 	<title>Pokedex</title>
@@ -19,11 +22,19 @@
 		   
 			<div id="pokemons-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-2">
 				
-				<div id="pokemon" class="flex flex-col align-middle justify-center bg-red-400 bg-ul-background bg-80% bg-center bg-no-repeat rounded-md m-2 p-4">
+				<template id="tile-template">
+					<div id="pokemon" class="flex flex-col align-middle justify-center m-2 p-6 font-custom_display bg-[#e2dedd] bg-ul-background bg-80% bg-right-bottom bg-no-repeat rounded-md shadow-md ">
+						<p class="text-center z-10 text:base md:text-2xl xl:text-3xl text-white mb-4 drop-shadow-lg font-custom">
+
+						</p>
+						<img src="" alt="" class="w-48 self-center">
+					</div>
+				</template>
+
+				<div id="pokemon" class="flex flex-col align-middle justify-center m-2 p-6 font-custom_display bg-[#e2dedd] bg-ul-background bg-50% bg-right-bottom bg-no-repeat rounded-md shadow-md ">
+					<p class="text-center z-10 text:base md:text-2xl xl:text-3xl text-white mb-4 drop-shadow-lg font-custom">Pikachu</p>
 					<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg" alt="" class="w-48 self-center">
-					<p class="text-center z-10 text-amber-500 mt-10">Pokemon</p>
 				</div>
-				
 
 			</div>
 
