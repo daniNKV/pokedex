@@ -13,6 +13,9 @@ module.exports = {
         tile: 'hex(var(--color-tile))',
         textColor: 'hex(var(--color-text))'
       },
+      gridTemplateRows: {
+        '1/5': '1fr 5fr'
+      },
       borderColor: {
         background: '#e2dedd'
       },
