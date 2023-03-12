@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css",
-    "build:live": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "build:live": "npx tailwindcss -i ./src/input.css -o ./src/dist/output.css --watch",
     "cypress:open": "cypress open",
     "server:start": "http-server src/index.html"
   },
