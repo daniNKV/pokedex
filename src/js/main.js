@@ -21,15 +21,14 @@ function appendPokemon($pokemon) {
 
 function createPokemonTile(pokemon) {
     const $template = document.getElementById('tile-template').content.cloneNode(true);
-    const pokemonName = $template.querySelector('p');
-    const pokemonImage = $template.querySelector('img');
-    
-    const {name, url} = pokemon
+
+    const { name, url } = pokemon
     const ID = getID(url);
-
-    pokemonName.textContent = capitalizeFirstLetter(name);
-    pokemonImage.src = getPokemonSprite(ID);
-
+    
+    $template.querySelector('p').textContent = capitalizeFirstLetter(name);
+    $template.querySelector('img').src = getPokemonSprite(ID);
+    $template.querySelector('div').dataset.id = ID;
+    
     return $template;
 }
 
