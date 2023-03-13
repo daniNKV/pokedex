@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'main-pattern': "url('/src/img/abstract_background.jpg')",
-        'ul-background': "url('/src/img/pokeball_inverted.png')"
+        'main-pattern': "url('img/abstract_background.jpg')",
+        'ul-background': "url('img/pokeball_inverted.png')"
       },
       colors: {
         background: 'rgb(var(--color-background))',
