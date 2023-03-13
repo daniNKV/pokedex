@@ -17,13 +17,16 @@ module.exports = {
         '1/3': '1fr 3fr'
       },
       borderColor: {
-        background: '#e2dedd'
+        'background': '#e2dedd'
       },
       backgroundSize: {
         '50%': '50%'
       },
       fontFamily: {
         custom: ['"Press Start 2P"']
+      },
+      dropShadow: {
+        'custom': ['0 10px 8px rgb(255 255 0 / 0.5)']
       }
     }
   },
