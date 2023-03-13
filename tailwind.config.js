@@ -14,7 +14,7 @@ module.exports = {
         textColor: 'hex(var(--color-text))'
       },
       gridTemplateRows: {
-        '1/4': '1fr 4fr'
+        '1/3': '1fr 3fr'
       },
       borderColor: {
         background: '#e2dedd'
