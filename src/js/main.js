@@ -48,6 +48,20 @@ function getPokemonSprite(ID) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${ID}.svg`
 }
 
+// ################ PAGINATION ################
+
+function initializePagination() {
+
+}
+
+
+function handlePagination() {
+
+
+}
+
+
+// ################ EVENT LISTENERS ################ 
 
 document.addEventListener('load', fillPage())
 

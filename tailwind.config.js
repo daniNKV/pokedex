@@ -29,6 +29,9 @@ module.exports = {
       dropShadow: {
         'custom': ['0 10px 8px rgb(255 255 0 / 0.5)']
       },
+      spacing: {
+        '104': '28rem',
+      }
     }
   },
   plugins: [],
