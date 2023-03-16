@@ -89,9 +89,11 @@ function handlePagination(event) {
         goPreviousPage(actualPage, totalPages );
 
     } else if (buttonClicked === "seek"){
-        const destiny = Number(document.getElementById('page-selection').value);
+        const $selection = document.getElementById('page-selection')
+        const destiny = Number($selection.value);
 
-        goToPage(destiny, totalPages);
+        checkError(destiny) ? goToPage(destiny, totalPages) : showError($selection);
+    
     } 
 
 }
@@ -158,8 +160,25 @@ function showButton(name) {
     document.getElementById(`${name}`).classList.remove('hidden');
 }
 
+function checkError(value) {
+    if (Number.isInteger(value) && (value > 0 && value <= 65)) {
+        return true;
+    }
+
+    return false;
+}
+
+function showError($element){
+    $element.style.borderColor = "red";
+    
+    setTimeout(() => {
+        $element.style.borderColor = "initial";
+    }, 2000)
+    
+}
 
 // ################ EVENT LISTENERS ################ 
 
 document.addEventListener('load', initialize());
 document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e));
+document.getElementById('page-selection').addEventListener('change', (e) => checkError(e.target) )
