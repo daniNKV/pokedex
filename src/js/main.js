@@ -1,15 +1,31 @@
 async function getPokemons() {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon");
-    const pokemons = await response.json()
+    const pokemons = await response.json();
 
     return pokemons;
 }
 
 
-async function fillPage() {
+async function getPageOfPokemons(page) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${(page - 1) * 20}&limit=20`);
+    const pokemons = await response.json();
+
+    return pokemons;
+}
+
+
+async function initialize() {
     const pokemons = await getPokemons();
-    
-    pokemons.results.forEach(pokemon => appendPokemon(createPokemonTile(pokemon)))
+    setActualPage(1);
+    fillPage(pokemons);
+    initializePagination(Math.ceil(pokemons.count / 20));
+
+}
+
+
+function fillPage(pokemons) {
+    document.getElementById('pokemons-list').innerHTML = "";
+    pokemons.results.forEach(pokemon => appendPokemon(createPokemonTile(pokemon)));
 }
 
 
@@ -22,7 +38,7 @@ function appendPokemon($pokemon) {
 function createPokemonTile(pokemon) {
     const $template = document.getElementById('tile-template').content.cloneNode(true);
 
-    const { name, url } = pokemon
+    const { name, url } = pokemon;
     const ID = getID(url);
     
     $template.querySelector('p').textContent = capitalizeFirstLetter(name);
@@ -45,23 +61,105 @@ function getID(url) {
 
 
 function getPokemonSprite(ID) {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${ID}.svg`
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${ID}.svg`;
 }
+
 
 // ################ PAGINATION ################
 
-function initializePagination() {
+
+function initializePagination(numberOfPages) {
+    document.getElementById('total-pages').textContent = numberOfPages;
+    document.getElementById('previous-button').classList.add('hidden');
+}
+
+
+function handlePagination(event) {
+    event.preventDefault();
+
+    const actualPage = Number(document.getElementById('pagination').dataset.selected);
+    const totalPages = Number(document.getElementById('total-pages').textContent);
+    const buttonClicked = event.target.dataset.button;
+    // const pageInfo = {actualPage, totalPages }
+
+    if (buttonClicked === "next") {
+        goNextPage(actualPage, totalPages );
+
+    } else if (buttonClicked === "previous") {
+        goPreviousPage(actualPage, totalPages );
+
+    } else if (buttonClicked === "seek"){
+        const destiny = Number(document.getElementById('page-selection').value);
+
+        goToPage(destiny, totalPages);
+    } 
+
+}
+
+async function seekPage(destinyPage) {
+    const pokemons = await getPageOfPokemons(destinyPage);
+    fillPage(pokemons);
+}
+
+
+function goPreviousPage(actual, total) {
+    const first = 1;
+    const destiny = actual - 1;
+
+    destiny === first ? hideButton('previous-button') : ""; 
+    destiny === total - 1 ? showButton('next-button') : ""; 
+    
+    seekPage(destiny);
+    setActualPage(destiny);
+}
+
+
+function goNextPage(actual, total) {
+    const first = 1;
+    const destiny = actual + 1;
+    
+    destiny === total ? hideButton('next-button') : ""; 
+    destiny === first + 1 ? showButton('previous-button') : ""; 
+
+    seekPage(destiny);
+    setActualPage(destiny);
+}
+
+
+function goToPage(destiny, total) {
+    const first = 1;
+    
+    destiny === first ? hideButton('previous-button') : ""; 
+    destiny === total ? hideButton('next-button') : ""; 
+
+    destiny !== first ? showButton('previous-button') : "";
+    destiny !== total ? showButton ('next-button') : "";
+    
+    seekPage(destiny);
+    setActualPage(destiny);
+}
+
+
+function setActualPage(page) {
+    document.getElementById('pagination').dataset.selected = page;
+    document.getElementById('page-selection').value = page;
+}
+
+
+function hideButton(name){ 
+    document.getElementById(`${name}`).classList.remove('absolute');
+    document.getElementById(`${name}`).classList.add('hidden');
 
 }
 
 
-function handlePagination() {
-
-
+function showButton(name) {
+    document.getElementById(`${name}`).classList.add('absolute');
+    document.getElementById(`${name}`).classList.remove('hidden');
 }
 
 
 // ################ EVENT LISTENERS ################ 
 
-document.addEventListener('load', fillPage())
-
+document.addEventListener('load', initialize());
+document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e));
