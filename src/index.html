@@ -15,7 +15,7 @@
 		<img style="transform:scale(.65)"src="/src/img/poke_logo.png" alt="Pokedex logo">
 	</header>
 
-	<main class="flex flex-col  border-t-8 border-background">
+	<main class="flex flex-col border-t-8 border-background">
 	   
 		<section id="pokemons-list" class="hidden grid grid-cols-1 place-self-center p-2 xs:grid-cols-2 gap-3 m-0 mt-0 sm:mx-4 sm:gap-5 sm:grid-cols-3 md:p-5 lg:grid-cols-4 bg-white max-w-7xl shadow-2xl shadow-background rounded-b-2xl" > <!-- probably max-w-screen-2xl-->
 				
@@ -49,23 +49,26 @@
 
 		</div>
 
-		<section id="pokemon-info" class="w-screen bg-gray-200">
-			<div class="h-3/6 p-6">
-				<button id="close" class="text-2xl"><i class="fa-solid fa-arrow-left"></i></button>
-				<h2 class="text-xl font-custom mt-2">Bulbasaur</h2>
-				<p class="font-sans">#002</p>
+		<section id="pokemon-info" class="flex flex-col w-screen place-self-center bg-gray-200 max-w-2xl rounded-b-2xl">
+			<div class="grid grid-rows-hero px-6 sm:px-12 sm:pt-8">
+				<div class="flex justify-between">
+					<button id="close" class="text-2xl "><i class="fa-solid fa-arrow-left"></i></button>
+					<p class="font-sans place-self-center pr-4 text-lg">#002</p>
+				</div>
+				<h2 class="text-xl font-custom sm:text-2xl">Bulbasaur</h2>
 				<ul id="tags" class="flex font-sans">
-					<li>Grass</li>
-					<li>Poison</li>
+					<li class="px-2 bg-slate-400 place-self-center rounded-lg">Grass</li>
+					<li class="px-2 bg-slate-400 place-self-center rounded-lg ml-2">Poison</li>
 				</ul>
-				<img src="" alt="">
+				<img class="w-48 place-self-center translate-y-10 -mt-6 sm:-mt-10 sm:w-60" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg"  alt="">
 			</div>
-			<div class="h-3/6 w-screen bg-white">
-				<nav class="p-3">
+			<div class=" bg-white rounded-b-2xl rounded-t-2xl">
+				<nav class="p-3 pt-14">
 					<ol class="flex justify-evenly">
-						<li>About</li>
-						<li>Base Stats</li>
-						<li>Moves</li>
+						<li class="border-b-2" data-button="about">About</li>
+						<li data-button="stats">Base Stats</li>
+						<li data-button="evolution">Evolution</li>
+						<li data-button="moves">Moves</li>
 					</ol>
 				</nav>
 			</div>

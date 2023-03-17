@@ -15,7 +15,8 @@ module.exports = {
       },
 
       gridTemplateRows: {
-        '1/3': '1fr 3fr'
+        '1/3': '1fr 3fr',
+        'hero': '50px repeat(2, 32px) 1fr',
       },
       borderColor: {
         'background': '#e2dedd'
