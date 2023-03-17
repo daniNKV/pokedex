@@ -160,6 +160,7 @@ function showButton(name) {
     document.getElementById(`${name}`).classList.remove('hidden');
 }
 
+
 function checkError(value) {
     if (Number.isInteger(value) && (value > 0 && value <= 65)) {
         return true;
@@ -167,6 +168,7 @@ function checkError(value) {
 
     return false;
 }
+
 
 function showError($element){
     $element.style.borderColor = "red";
@@ -181,4 +183,3 @@ function showError($element){
 
 document.addEventListener('load', initialize());
 document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e));
-document.getElementById('page-selection').addEventListener('change', (e) => checkError(e.target) )

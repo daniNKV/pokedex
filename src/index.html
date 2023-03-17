@@ -4,9 +4,6 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/x-icon" href="/src/img/favicon.png">
 	<link rel="stylesheet" href="dist/output.css">    
 	<script src="https://kit.fontawesome.com/ad13df3069.js" crossorigin="anonymous"></script>
@@ -20,7 +17,7 @@
 
 	<main class="flex flex-col  border-t-8 border-background">
 	   
-		<section id="pokemons-list" class="grid grid-cols-1 place-self-center p-2 xs:grid-cols-2 gap-3 m-0 mt-0 sm:mx-4 sm:gap-5 sm:grid-cols-3 md:p-5 lg:grid-cols-4 bg-white max-w-7xl shadow-2xl shadow-background rounded-b-2xl" > <!-- probably max-w-screen-2xl-->
+		<section id="pokemons-list" class="hidden grid grid-cols-1 place-self-center p-2 xs:grid-cols-2 gap-3 m-0 mt-0 sm:mx-4 sm:gap-5 sm:grid-cols-3 md:p-5 lg:grid-cols-4 bg-white max-w-7xl shadow-2xl shadow-background rounded-b-2xl" > <!-- probably max-w-screen-2xl-->
 				
 		</section>
 
@@ -33,7 +30,7 @@
 
 		</template> 
 		
-		<div id="pagination" data-selected="1" class="relative flex justify-center w-screen min-[440px]:w-[28rem] my-6 p-4 place-self-center text-xs xs:text-lg bg-white rounded-2xl shadow-2xl shadow-background">
+		<div id="pagination" data-selected="1" class="hidden relative flex justify-center w-screen min-[440px]:w-[28rem] my-6 p-4 place-self-center text-xs xs:text-lg bg-white rounded-2xl shadow-2xl shadow-background">
 			
 			<button id="previous-button" data-button="previous" class="absolute left-0 top-1/4 flex text-2xl p-1 xs:p-3 mr-2 ml-4 bg-[#e2dedd] rounded-lg hover:shadow-lg hover:scale-105 transition-all" href="">
 				<i data-button="previous" class="fa-solid fa-hand-point-left place-self-center"></i>
@@ -51,6 +48,28 @@
 			</button>
 
 		</div>
+
+		<section id="pokemon-info" class="w-screen bg-gray-200">
+			<div class="h-3/6 p-6">
+				<button id="close" class="text-2xl"><i class="fa-solid fa-arrow-left"></i></button>
+				<h2 class="text-xl font-custom mt-2">Bulbasaur</h2>
+				<p class="font-sans">#002</p>
+				<ul id="tags" class="flex font-sans">
+					<li>Grass</li>
+					<li>Poison</li>
+				</ul>
+				<img src="" alt="">
+			</div>
+			<div class="h-3/6 w-screen bg-white">
+				<nav class="p-3">
+					<ol class="flex justify-evenly">
+						<li>About</li>
+						<li>Base Stats</li>
+						<li>Moves</li>
+					</ol>
+				</nav>
+			</div>
+		</section>
 	</main>
 
 	

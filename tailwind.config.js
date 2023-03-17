@@ -24,7 +24,8 @@ module.exports = {
         '50%': '50%'
       },
       fontFamily: {
-        custom: ['"Press Start 2P"']
+        custom: ['"Press Start 2P"'],
+        sans: ['"Open Sans']
       },
       dropShadow: {
         'custom': ['0 10px 8px rgb(255 255 0 / 0.5)']

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Press+Start+2P&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,9 +11,6 @@
       --color-text: #fdce31;
       /* ... */
     }
-  }
-
-  @layer base {
     input[type='number']::-webkit-outer-spin-button,
     input[type='number']::-webkit-inner-spin-button,
     input[type='number'] {
@@ -22,3 +19,4 @@
       -moz-appearance: textfield !important;
     }
  }
+
