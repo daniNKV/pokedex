@@ -17,12 +17,18 @@ module.exports = {
       gridTemplateRows: {
         '1/3': '1fr 3fr',
         'hero': '50px repeat(2, 32px) 1fr',
+        
+      },
+
+      gridTemplateColumns: {
+        'stats': '1fr 2fr'
       },
       borderColor: {
         'background': '#e2dedd'
       },
       backgroundSize: {
-        '50%': '50%'
+        '50%': '50%',
+        '25%': '25%'
       },
       fontFamily: {
         custom: ['"Press Start 2P"'],
