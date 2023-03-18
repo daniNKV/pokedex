@@ -22,7 +22,7 @@ module.exports = {
 
       gridTemplateColumns: {
         'about': '1fr 2fr',
-        'stats': '1fr 3fr'
+        'stats': '1fr 2fr'
 
       },
       borderColor: {
