@@ -21,7 +21,9 @@ module.exports = {
       },
 
       gridTemplateColumns: {
-        'stats': '1fr 2fr'
+        'about': '1fr 2fr',
+        'stats': '1fr 3fr'
+
       },
       borderColor: {
         'background': '#e2dedd'
