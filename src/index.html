@@ -51,7 +51,7 @@
 
 		<section id="pokemon-info" class="hidden flex flex-col w-screen place-self-center bg-gray-200 max-w-2xl rounded-b-2xl mb-10">
 			
-			<div class="grid grid-rows-hero px-6 sm:px-12 sm:pt-8 ">
+			<div id="info-hero" class="grid grid-rows-hero px-6 sm:px-12 sm:pt-8 ">
 				<div class="flex justify-between">
 					<button id="close" class="text-2xl "><i class="fa-solid fa-arrow-left"></i></button>
 					<p id="pokemon-id" class="font-sans place-self-center pr-4 text-xl"></p>
@@ -85,9 +85,9 @@
 
 					</ul>
 
-					<h2 class="text-2xl font-bold mt-4 mb-1">Breeding</h3>
-
-					<ul id="breeding-info">
+					
+					<ul id="breeding-info" class="flex flex-col">
+						<h2 class="text-2xl font-bold mt-4 mb-1">Breeding</h2>
 
 						<template id="gender-template">
 							<li class="grid grid-cols-2 sm:grid-cols-about p-1">

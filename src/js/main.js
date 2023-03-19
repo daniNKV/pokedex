@@ -14,6 +14,24 @@ async function getPageOfPokemons(page) {
 }
 
 
+async function getPokemon(ID) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${ID}`);
+    const pokemon = await response.json();
+
+    return pokemon;
+}
+
+
+async function getPokemonBreeding(ID) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${ID}`);
+    const pokemon = await response.json();
+
+    return pokemon;
+}
+
+// ################### MAIN ################### 
+
+
 async function initialize() {
     const pokemons = await getPokemons();
     setActualPage(1);
@@ -43,6 +61,7 @@ function createPokemonTile(pokemon) {
     
     $template.querySelector('p').textContent = capitalizeFirstLetter(name);
     $template.querySelector('img').src = getPokemonSprite(ID);
+    $template.querySelector('img').dataset.id = ID;
     $template.querySelector('div').dataset.id = ID;
     
     return $template;
@@ -62,6 +81,42 @@ function getID(url) {
 
 function getPokemonSprite(ID) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${ID}.svg`;
+}
+
+// ################ POKEMON INFO ################
+
+async function initializePokemon(e) {
+    const pokemon = await getPokemon(e.target.dataset.id);
+    hideList();
+    showPokemonInfo(pokemon);
+
+}
+
+function showPokemonInfo(data) {
+    showPokemonUI();
+
+    console.log(data)
+}
+
+function showPokemonUI() {
+    document.getElementById('pokemon-info').classList.remove("hidden");
+    document.getElementById('close').addEventListener('click', showList);
+}
+
+function hidePokemonUI() {
+    document.getElementById('pokemon-info').innerHTML = "";
+
+}
+
+function hideList() {
+    document.getElementById('pokemons-list').classList.add('hidden');
+    document.getElementById('pagination').classList.add('hidden');
+}
+
+function showList() {
+    document.getElementById('pokemons-list').classList.remove('hidden');
+    document.getElementById('pagination').classList.remove('hidden');
+    hidePokemonUI();
 }
 
 
@@ -183,3 +238,4 @@ function showError($element){
 
 document.addEventListener('load', initialize());
 document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e));
+document.getElementById('pokemons-list').addEventListener('click', (e) => initializePokemon(e));
