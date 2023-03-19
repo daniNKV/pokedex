@@ -17,7 +17,7 @@
 
 	<main class="flex flex-col border-t-8 border-background">
 	   
-		<section id="pokemons-list" class="hidden grid grid-cols-1 place-self-center p-2 xs:grid-cols-2 gap-3 m-0 mt-0 sm:mx-4 sm:gap-5 sm:grid-cols-3 md:p-5 lg:grid-cols-4 bg-white max-w-7xl shadow-2xl shadow-background rounded-b-2xl" > <!-- probably max-w-screen-2xl-->
+		<section id="pokemons-list" class=" grid grid-cols-1 place-self-center p-2 xs:grid-cols-2 gap-3 m-0 mt-0 sm:mx-4 sm:gap-5 sm:grid-cols-3 md:p-5 lg:grid-cols-4 bg-white max-w-7xl shadow-2xl shadow-background rounded-b-2xl" > <!-- probably max-w-screen-2xl-->
 				
 		</section>
 
@@ -30,7 +30,7 @@
 
 		</template> 
 		
-		<div id="pagination" data-selected="1" class="hidden relative flex justify-center w-screen min-[440px]:w-[28rem] my-6 p-4 place-self-center text-xs xs:text-lg bg-white rounded-2xl shadow-2xl shadow-background">
+		<div id="pagination" data-selected="1" class="relative flex justify-center w-screen min-[440px]:w-[28rem] my-6 p-4 place-self-center text-xs xs:text-lg bg-white rounded-2xl shadow-2xl shadow-background">
 			
 			<button id="previous-button" data-button="previous" class="absolute left-0 top-1/4 flex text-2xl p-1 xs:p-3 mr-2 ml-4 bg-[#e2dedd] rounded-lg hover:shadow-lg hover:scale-105 transition-all" href="">
 				<i data-button="previous" class="fa-solid fa-hand-point-left place-self-center"></i>
@@ -49,7 +49,7 @@
 
 		</div>
 
-		<section id="pokemon-info" class="flex flex-col w-screen place-self-center bg-gray-200 max-w-2xl rounded-b-2xl mb-10">
+		<section id="pokemon-info" class="hidden flex flex-col w-screen place-self-center bg-gray-200 max-w-2xl rounded-b-2xl mb-10">
 			<div class="grid grid-rows-hero px-6 sm:px-12 sm:pt-8 ">
 				<div class="flex justify-between">
 					<button id="close" class="text-2xl "><i class="fa-solid fa-arrow-left"></i></button>
@@ -70,7 +70,7 @@
 					</ol>
 				</nav>
 
-				<div id="about" class="hidden text-lg p-8 pt-2">
+				<div id="about" class=" text-lg p-8 pt-2">
 					<ul class="mt-2" id="basic-info">
 
 						<template id="about-item">
@@ -79,7 +79,7 @@
 								<p>Seed</p>
 							</li>
 						</template>
-
+						
 						<li class="grid grid-cols-2 sm:grid-cols-about p-1">
 							<h3 class="text-gray-500">Species </h3>
 							<p>Seed</p>
@@ -117,12 +117,17 @@
 							<h3 class="text-gray-500">Egg Cycle </h3>
 							<p>Grass</p>
 						</li>
+						<li class="grid grid-cols-2 sm:grid-cols-about p-1">
+							<h3 class="text-gray-500">Growth Rate </h3>
+							<p>Slow</p>
+						</li>
+
 					</ul>
 
 				</div>
 
 
-				<div id="stats" class="xs:text-lg p-3 sm:p-8 sm:pt-2 pt-2 mb-2">
+				<div id="stats" class="hidden xs:text-lg p-3 sm:p-8 sm:pt-2 pt-2 mb-2">
 					
 					<template id="stats-item">
 						<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1 ">
@@ -140,49 +145,49 @@
 								<h3 class="text-gray-500">HP</h3>
 								<p>45</p>
 							</div>
-							<progress value="45" max="100" class="w-full"></progress>
+							<progress value="45" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100 progress "></progress>
 						</li>
 						<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
 							<div class="flex gap-4 justify-evenly xs:justify-between">
 								<h3 class="text-gray-500">Attack</h3>
 								<p>60</p>
 							</div>
-							<progress value="60" max="100" class="w-full"></progress>
+							<progress value="60" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
 						</li>
 						<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
 							<div class="flex gap-4 justify-evenly xs:justify-between">
 								<h3 class="text-gray-500">Defense</h3>
 								<p>48</p>
 							</div>
-							<progress value="48" max="100" class="w-full"></progress>
+							<progress value="48" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
 						</li>
 						<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
 							<div class="flex gap-4 justify-evenly xs:justify-between">
 								<h3 class="text-gray-500">Sp. Atk</h3>
 								<p>66</p>
 							</div>
-							<progress value="66" max="100" class="w-full"></progress>
+							<progress value="66" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
 						</li>
 						<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
 							<div class="flex gap-4 justify-evenly xs:justify-between">
 								<h3 class="text-gray-500">Sp. Def</h3>
 								<p>65</p>
 							</div>
-							<progress value="65" max="100" class="w-full"></progress>
+							<progress value="65" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
 						</li>
 						<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
 							<div class="flex gap-4 justify-evenly xs:justify-between">
 								<h3 class="text-gray-500">Speed</h3>
 								<p>45</p>
 							</div>
-							<progress value="45" max="100" class="w-full"></progress>
+							<progress value="45" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
 						</li>
 						<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
 							<div class="flex justify-evenly xs:justify-between gap-4">
 								<h3 class="text-gray-500">Total</h3>
 								<p>317</p>
 							</div>
-							<progress value="317" max="600" class="w-full"></progress>
+							<progress value="317" max="600" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
 						</li>
 					</ul>
 				</div>
