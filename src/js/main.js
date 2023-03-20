@@ -68,17 +68,6 @@ function createPokemonTile(pokemon) {
 }
 
 
-function capitalizeFirstLetter(string) {
-    return string[0].toUpperCase().concat(string.slice(1));
-}
-
-
-function getID(url) {
-    const numbersRegex = /\d/g;
-    return url.match(numbersRegex).slice(1).join("");
-}
-
-
 function getPokemonSprite(ID) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${ID}.svg`;
 }
@@ -94,19 +83,6 @@ async function initializePokemon(e) {
     showPokemonInfo(ID, pokemonBasic, pokemonSpecie);
     
 }
-
-function appendSection($element) {
-    const $main = document.getElementById('app');
-    $main.appendChild($element);
-    
-}
-
-function createSection() {
-    const $section = document.getElementById('pokemon-info-template').content.cloneNode(true);
-
-    return $section;
-}
-
 function showPokemonInfo(ID, basic, breeding) {
     // const color = breeding.color.name;
     makeHero(basic);
@@ -116,6 +92,7 @@ function showPokemonInfo(ID, basic, breeding) {
     showPokemonUI();
 }
 
+
 function makeBreeding(data) {
     const { egg_groups, gender_rate, growth_rate, habitat } = data;
     const items = { 
@@ -123,14 +100,12 @@ function makeBreeding(data) {
         ["Egg Groups"]: eggGroupsToString(egg_groups),
         ["Growth Rate"]: growth_rate.name
     }
+    
     const $breeding = document.getElementById('breeding-info');
     appendItem($breeding, createGenderElement(getGenderProbability(gender_rate)));
     Object.entries(items).forEach(item => appendItem($breeding, createItem(item[0], capitalizeFirstLetter(item[1]))));
 }
 
-function eggGroupsToString(obj) {
-    return obj.map(innerObj => parseFromHyphen(innerObj.name)).join(', ');
-}
 
 function createGenderElement(values) {
     const $genders = document.getElementById('gender-template').content.cloneNode(true);
@@ -157,43 +132,13 @@ function makeAbout(data) {
 
 }
 
-function convertMetersToFeetAndInches(meters) {
-    const totalInches = meters * 39.3701;
-    const feet = Math.floor(totalInches / 12);
-    const inches = Math.round(totalInches % 12);
-    return `${feet}'${inches}"`;
-  }
 
-function convertKgToLb(kg) {
-    const lb = kg * 2.20462;
-    return lb;
-  }
+function createSection() {
+    const $section = document.getElementById('pokemon-info-template').content.cloneNode(true);
 
-function getGenderProbability(genderRate) {
-    if (genderRate === -1) {
-      return [0, 0];
-    } else if (genderRate === 0) {
-      return [0, 0];
-    } else if (genderRate === 1) {
-      return [100, 0];
-    } else if (genderRate === 2) {
-      return [50, 50];
-    } else if (genderRate >= 3 && genderRate <= 7) {
-      const femaleChance = 100 / (genderRate * 2);
-      return [100 - femaleChance, femaleChance];
-    } else if (genderRate === 8) {
-      return [0, 100];
-    }
-  }
-  
-
-function appendItem(parent, item) {
-    parent.appendChild(item);
+    return $section;
 }
 
-function abilitiesToString(obj) {
-    return obj.map(innerObj => parseFromHyphen(innerObj.ability.name)).join(', ');
-}
 
 function createItem(name, value) {
     const $itemTemplate = document.getElementById('about-item-template').content.cloneNode(true);
@@ -202,18 +147,6 @@ function createItem(name, value) {
     $itemTemplate.querySelector('p').textContent = value;
 
     return $itemTemplate;
-}
-
-function parseFromHyphen(string) {
-    return capitalizeFirstLetter(string.replaceAll('-', ' '));
-}
-
-function parseFromSnake(string) {
-    return capitalizeFirstLetter(string.replaceAll('_', ' '));
-}
-
-function parseAbilities(string) {
-
 }
 
 
@@ -231,9 +164,7 @@ function makeHero(data) {
 
 }
 
-function appendTags($element, $tagsElements) {
-    $tagsElements.forEach($tag => $element.appendChild($tag));
-}
+
 
 function createTags(names) {
     const $tagTemplate = document.getElementById('tag-template').content;
@@ -252,43 +183,6 @@ function getTagsNames(data) {
     return tags;
 }
 
-function parseToThreeDigits(number) {
-    if (number < 10) {
-        return '00' + number.toString();
-    }else if (number < 100) {
-        return '0' + number.toString();
-    }else
-        return number.toString();
-}
-
-// function makeAbout(ID, data) {
-//     const {abilities, height, weight, types} = data;
-
-
-
-//     console.log($name)
-// }
-
-function showPokemonUI() {
-    document.getElementById('pokemon-info').classList.remove("hidden");
-    document.getElementById('close').addEventListener('click', showList);
-}
-
-function hidePokemonUI() {
-    document.getElementById('pokemon-info').remove();
-
-}
-
-function hideList() {
-    document.getElementById('pokemons-list').classList.add('hidden');
-    document.getElementById('pagination').classList.add('hidden');
-}
-
-function showList() {
-    document.getElementById('pokemons-list').classList.remove('hidden');
-    document.getElementById('pagination').classList.remove('hidden');
-    hidePokemonUI();
-}
 
 
 // ################ PAGINATION ################
@@ -367,6 +261,106 @@ function goToPage(destiny, total) {
 }
 
 
+// ############## UTILS ##############
+
+function eggGroupsToString(obj) {
+    return obj.map(innerObj => parseFromHyphen(innerObj.name)).join(', ');
+}
+
+
+function abilitiesToString(obj) {
+    return obj.map(innerObj => parseFromHyphen(innerObj.ability.name)).join(', ');
+}
+
+
+function convertMetersToFeetAndInches(meters) {
+    const totalInches = meters * 39.3701;
+    const feet = Math.floor(totalInches / 12);
+    const inches = Math.round(totalInches % 12);
+    return `${feet}'${inches}"`;
+}
+
+
+function convertKgToLb(kg) {
+    const lb = kg * 2.20462;
+    return lb;
+  }
+
+
+function capitalizeFirstLetter(string) {
+    return string[0].toUpperCase().concat(string.slice(1));
+}
+
+
+function getID(url) {
+    const numbersRegex = /\d/g;
+    return url.match(numbersRegex).slice(1).join("");
+}
+
+
+function parseToThreeDigits(number) {
+    if (number < 10) {
+        return '00' + number.toString();
+    }else if (number < 100) {
+        return '0' + number.toString();
+    }else
+        return number.toString();
+}
+
+function getGenderProbability(genderRate) {
+    if (genderRate === -1) {
+      return [0, 0];
+    } else if (genderRate === 0) {
+      return [0, 0];
+    } else if (genderRate === 1) {
+      return [100, 0];
+    } else if (genderRate === 2) {
+      return [50, 50];
+    } else if (genderRate >= 3 && genderRate <= 7) {
+      const femaleChance = 100 / (genderRate * 2);
+      return [100 - femaleChance, femaleChance];
+    } else if (genderRate === 8) {
+      return [0, 100];
+    }
+  }
+
+
+function parseFromHyphen(string) {
+    return capitalizeFirstLetter(string.replaceAll('-', ' '));
+}
+
+
+function parseFromSnake(string) {
+    return capitalizeFirstLetter(string.replaceAll('_', ' '));
+}
+
+
+function checkError(value) {
+    if (Number.isInteger(value) && (value > 0 && value <= 65)) {
+        return true;
+    }
+
+    return false;
+}
+
+// ############## DOM ##############
+
+function appendSection($element) {
+    const $main = document.getElementById('app');
+    $main.appendChild($element);
+    
+}
+
+function appendItem(parent, item) {
+    parent.appendChild(item);
+}
+
+
+function appendTags($element, $tagsElements) {
+    $tagsElements.forEach($tag => $element.appendChild($tag));
+}
+
+
 function setActualPage(page) {
     document.getElementById('pagination').dataset.selected = page;
     document.getElementById('page-selection').value = page;
@@ -386,13 +380,32 @@ function showButton(name) {
 }
 
 
-function checkError(value) {
-    if (Number.isInteger(value) && (value > 0 && value <= 65)) {
-        return true;
-    }
-
-    return false;
+function showPokemonUI() {
+    document.getElementById('pokemon-info').classList.remove("hidden");
+    document.getElementById('close').addEventListener('click', showList);
 }
+
+
+function hidePokemonUI() {
+    document.getElementById('pokemon-info').remove();
+
+}
+
+function hideList() {
+    document.getElementById('pokemons-list').classList.add('hidden');
+    document.getElementById('pagination').classList.add('hidden');
+}
+
+
+function showList() {
+    document.getElementById('pokemons-list').classList.remove('hidden');
+    document.getElementById('pagination').classList.remove('hidden');
+    hidePokemonUI();
+}
+
+
+
+
 
 
 function showError($element){
