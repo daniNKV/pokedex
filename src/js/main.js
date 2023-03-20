@@ -22,7 +22,7 @@ async function getPokemon(ID) {
 }
 
 
-async function getPokemonBreeding(ID) {
+async function getPokemonSpecie(ID) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${ID}`);
     const pokemon = await response.json();
 
@@ -88,11 +88,10 @@ function getPokemonSprite(ID) {
 async function initializePokemon(e) {
     const ID = e.target.dataset.id;
     const pokemonBasic = await getPokemon(ID);
-    const pokemonBreeding = await getPokemonBreeding(ID)
-    
+    const pokemonSpecie = await getPokemonSpecie(ID);
     hideList();
     appendSection(createSection());
-    showPokemonInfo(ID, pokemonBasic, pokemonBreeding);
+    showPokemonInfo(ID, pokemonBasic, pokemonSpecie);
     
 }
 
@@ -109,24 +108,84 @@ function createSection() {
 }
 
 function showPokemonInfo(ID, basic, breeding) {
-    const {color, egg_groups, gender_rate, growth_rate } = breeding;
-    
+    // const color = breeding.color.name;
     makeHero(basic);
     makeAbout(basic);
+    makeBreeding(breeding);
     // makeStats();
     showPokemonUI();
 }
 
+function makeBreeding(data) {
+    const { egg_groups, gender_rate, growth_rate, habitat } = data;
+    const items = { 
+        Habitat: habitat.name, 
+        ["Egg Groups"]: eggGroupsToString(egg_groups),
+        ["Growth Rate"]: growth_rate.name
+    }
+    const $breeding = document.getElementById('breeding-info');
+    appendItem($breeding, createGenderElement(getGenderProbability(gender_rate)));
+    Object.entries(items).forEach(item => appendItem($breeding, createItem(item[0], capitalizeFirstLetter(item[1]))));
+}
+
+function eggGroupsToString(obj) {
+    return obj.map(innerObj => parseFromHyphen(innerObj.name)).join(', ');
+}
+
+function createGenderElement(values) {
+    const $genders = document.getElementById('gender-template').content.cloneNode(true);
+    console.log(values)
+    $genders.getElementById('mars').textContent = values[0] + "% ";
+    $genders.getElementById('venus').textContent = values[1] + "% ";
+
+    return $genders;
+}
+
+
 function makeAbout(data) {
     const { height, weight, abilities, base_experience } = data;
-    const items = { experience:base_experience, height, weight };
-    const abilitiesParsed = {abilities: abilitiesToString(abilities)};
+    const items = { 
+        Experience: base_experience, 
+        Height: height*10 + " cm (" + convertMetersToFeetAndInches(height/10) + ")", 
+        Weight: weight/10 + " kg (" + convertKgToLb(weight/10).toFixed(2) + " lb)", 
+        Abilities: abilitiesToString(abilities) };
+
     const $about = document.getElementById('basic-info');
 
-    Object.entries(Object.assign({}, items, abilitiesParsed)).forEach(item => appendItem($about, createItem(item[0], item[1])))
+    Object.entries(items).forEach(item => appendItem($about, createItem(item[0], item[1])))
 
 
 }
+
+function convertMetersToFeetAndInches(meters) {
+    const totalInches = meters * 39.3701;
+    const feet = Math.floor(totalInches / 12);
+    const inches = Math.round(totalInches % 12);
+    return `${feet}'${inches}"`;
+  }
+
+function convertKgToLb(kg) {
+    const lb = kg * 2.20462;
+    return lb;
+  }
+
+function getGenderProbability(genderRate) {
+    if (genderRate === -1) {
+      return [0, 0];
+    } else if (genderRate === 0) {
+      return [0, 0];
+    } else if (genderRate === 1) {
+      return [100, 0];
+    } else if (genderRate === 2) {
+      return [50, 50];
+    } else if (genderRate >= 3 && genderRate <= 7) {
+      const femaleChance = 100 / (genderRate * 2);
+      return [100 - femaleChance, femaleChance];
+    } else if (genderRate === 8) {
+      return [0, 100];
+    }
+  }
+  
 
 function appendItem(parent, item) {
     parent.appendChild(item);
@@ -163,7 +222,7 @@ function makeHero(data) {
     const $name = document.getElementById('pokemon-name');
     const $id = document.getElementById('pokemon-id');
     const $img = document.getElementById('pokemon-image');
-    const $tags = document.getElementById('tags')
+    const $tags = document.getElementById('tags');
 
     $name.textContent = capitalizeFirstLetter(name);
     $id.textContent = "#" + parseToThreeDigits(id);
