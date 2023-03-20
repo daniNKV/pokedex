@@ -86,17 +86,90 @@ function getPokemonSprite(ID) {
 // ################ POKEMON INFO ################
 
 async function initializePokemon(e) {
-    const pokemon = await getPokemon(e.target.dataset.id);
+    const ID = e.target.dataset.id;
+    const pokemonBasic = await getPokemon(ID);
+    const pokemonBreeding = await getPokemonBreeding(ID)
+    
     hideList();
-    showPokemonInfo(pokemon);
-
+    appendSection(createSection());
+    showPokemonInfo(ID, pokemonBasic, pokemonBreeding);
+    
 }
 
-function showPokemonInfo(data) {
+function appendSection($element) {
+    const $main = document.getElementById('app');
+    $main.appendChild($element);
+    
+}
+
+function createSection() {
+    const $section = document.getElementById('pokemon-info-template').content.cloneNode(true);
+
+    return $section;
+}
+
+function showPokemonInfo(ID, basic, breeding) {
+    const {color, egg_groups, gender_rate, growth_rate } = breeding;
+    
+    makeHero(basic);
+    // makeAbout(basic);
+    // makeStats();
     showPokemonUI();
-
-    console.log(data)
 }
+
+
+function makeHero(data) {
+    const {name, id, sprites, types} = data;
+    const $name = document.getElementById('pokemon-name');
+    const $id = document.getElementById('pokemon-id');
+    const $img = document.getElementById('pokemon-image');
+    const $tags = document.getElementById('tags')
+
+    $name.textContent = capitalizeFirstLetter(name);
+    $id.textContent = "#" + parseToThreeDigits(id);
+    $img.src = sprites.other.dream_world.front_default;
+    appendTags($tags, createTags(getTagsNames(types)));
+
+}
+
+function appendTags($element, $tagsElements) {
+    console.log($tagsElements)
+    $tagsElements.forEach($tag => $element.appendChild($tag));
+}
+
+function createTags(names) {
+    const $tagTemplate = document.getElementById('tag-template').content;
+
+    return Array.from(names, (name) => {
+        const $newTag = $tagTemplate.querySelector('li').cloneNode(true);
+        $newTag.textContent = capitalizeFirstLetter(name);
+
+        return $newTag
+    })
+}
+
+function getTagsNames(data) {
+    const tags = Array.from(data, tag => tag.type.name );
+
+    return tags;
+}
+
+function parseToThreeDigits(number) {
+    if (number < 10) {
+        return '00' + number.toString();
+    }else if (number < 100) {
+        return '0' + number.toString();
+    }else
+        return number.toString();
+}
+
+// function makeAbout(ID, data) {
+//     const {abilities, height, weight, types} = data;
+
+
+
+//     console.log($name)
+// }
 
 function showPokemonUI() {
     document.getElementById('pokemon-info').classList.remove("hidden");
@@ -104,7 +177,7 @@ function showPokemonUI() {
 }
 
 function hidePokemonUI() {
-    document.getElementById('pokemon-info').innerHTML = "";
+    document.getElementById('pokemon-info').remove();
 
 }
 
@@ -121,7 +194,6 @@ function showList() {
 
 
 // ################ PAGINATION ################
-
 
 function initializePagination(numberOfPages) {
     document.getElementById('total-pages').textContent = numberOfPages;

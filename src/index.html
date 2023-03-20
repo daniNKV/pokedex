@@ -15,7 +15,7 @@
 		<img style="transform:scale(.65)"src="/src/img/poke_logo.png" alt="Pokedex logo">
 	</header>
 
-	<main class="flex flex-col border-t-8 border-background">
+	<main id="app" class="flex flex-col border-t-8 border-background">
 	   
 		<section id="pokemons-list" class=" grid grid-cols-1 place-self-center p-2 xs:grid-cols-2 gap-3 m-0 mt-0 sm:mx-4 sm:gap-5 sm:grid-cols-3 md:p-5 lg:grid-cols-4 bg-white max-w-7xl shadow-2xl shadow-background rounded-b-2xl" > <!-- probably max-w-screen-2xl-->
 				
@@ -49,95 +49,98 @@
 
 		</div>
 
-		<section id="pokemon-info" class="hidden flex flex-col w-screen place-self-center bg-gray-200 max-w-2xl rounded-b-2xl mb-10">
-			
-			<div id="info-hero" class="grid grid-rows-hero px-6 sm:px-12 sm:pt-8 ">
-				<div class="flex justify-between">
-					<button id="close" class="text-2xl "><i class="fa-solid fa-arrow-left"></i></button>
-					<p id="pokemon-id" class="font-sans place-self-center pr-4 text-xl"></p>
-				</div>
-				<h2 id="pokemon-name" class="text-xl font-custom sm:text-2xl"></h2>
-				<ul id="tags" class="flex font-sans">
-					<template id="tag-template">
-						<li class="px-2 bg-slate-400 place-self-center rounded-lg"></li>
-					</template>
-				</ul>
-				<img class="w-48 place-self-center translate-y-10 -mt-6 sm:-mt-10 sm:w-60" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"  alt="">
-			</div>
-
-			<div id="main-info" class=" bg-white rounded-b-2xl rounded-t-3xl">
-				<nav class="p-3 pt-14">
-					<ol class="flex justify-evenly text-xl">
-						<li class="border-b-2 font-bold cursor-pointer" data-button="about">About</li>
-						<li class="text-gray-500 cursor-pointer" data-button="stats">Base Stats</li>
-					</ol>
-				</nav>
-
-				<div id="about" class=" text-lg p-8 pt-2">
-					<ul id="basic-info" class="mt-2">
-
-						<template id="about-item-template">
-							<li class="grid grid-cols-2 sm:grid-cols-about p-1">
-								<h3 class="text-gray-500"></h3>
-								<p></p>
-							</li>
+		<template id="pokemon-info-template">
+	
+			<section id="pokemon-info" class="flex flex-col w-screen place-self-center bg-gray-200 max-w-2xl rounded-b-2xl mb-10">
+	
+				<div id="info-hero" class="grid grid-rows-hero px-6 sm:px-12 sm:pt-8 ">
+					<div class="flex justify-between">
+						<button id="close" class="text-2xl "><i class="fa-solid fa-arrow-left"></i></button>
+						<p id="pokemon-id" class="font-sans place-self-center pr-4 text-xl"></p>
+					</div>
+					<h2 id="pokemon-name" class="text-xl font-custom sm:text-2xl"></h2>
+					<ul id="tags" class="flex font-sans gap-2 mt-2">
+						<template id="tag-template">
+							<li class="p-1 px-2  bg-slate-400 place-self-center rounded-lg"></li>
 						</template>
-
 					</ul>
-
-					
-					<ul id="breeding-info" class="flex flex-col">
-						<h2 class="text-2xl font-bold mt-4 mb-1">Breeding</h2>
-
-						<template id="gender-template">
-							<li class="grid grid-cols-2 sm:grid-cols-about p-1">
-								<h3 class="text-gray-500">Gender </h3>
-								<div class="flex">
-									<p>82.7% <i class="fa-solid fa-mars px-1"></i></p>
-									<p>32.4% <i class="fa-solid fa-venus px-1"></i></p>
-								</div>
-							</li>
-						</template>
-						
-						<!-- <template id="about-item-template">
-							<li class="grid grid-cols-2 sm:grid-cols-about p-1">
-								<h3 class="text-gray-500"></h3>
-								<p></p>
-							</li>
-						</template> -->
-
-					</ul>
+					<img id="pokemon-image" class="w-48 place-self-center translate-y-10 -mt-6 sm:-mt-10 sm:w-60" src=""  alt="">
 				</div>
-
-
-				<div id="stats" class="hidden xs:text-lg p-3 sm:p-8 sm:pt-2 pt-2 mb-2">
-					
-					<ul class="mt-2" id="stats-list">
-
-						<template id="stats-item-template">
-							<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1 ">
-								<div class="flex gap-4 justify-evenly xs:justify-between">
-									<h3 class="text-gray-500">HP</h3>
-									<p>45</p>
-								</div>
-								<progress value="45" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100 progress "></progress>
-							</li>
-						</template>
-
-						<template id="stats-total-template">
-							<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
-								<div class="flex justify-evenly xs:justify-between gap-4">
-									<h3 class="text-gray-500">Total</h3>
-									<p>317</p>
-								</div>
-								<progress value="317" max="600" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
-							</li>
-						</template>
-
-					</ul>
+	
+				<div id="main-info" class=" bg-white rounded-b-2xl rounded-t-3xl">
+					<nav class="p-3 pt-14">
+						<ol class="flex justify-evenly text-xl">
+							<li class="border-b-2 font-bold cursor-pointer" data-button="about">About</li>
+							<li class="text-gray-500 cursor-pointer" data-button="stats">Base Stats</li>
+						</ol>
+					</nav>
+	
+					<div id="about" class=" text-lg p-8 pt-2">
+						<ul id="basic-info" class="mt-2">
+	
+							<template id="about-item-template">
+								<li class="grid grid-cols-2 sm:grid-cols-about p-1">
+									<h3 class="text-gray-500"></h3>
+									<p></p>
+								</li>
+							</template>
+	
+						</ul>
+	
+	
+						<ul id="breeding-info" class="flex flex-col">
+							<h2 class="text-2xl font-bold mt-4 mb-1">Breeding</h2>
+	
+							<template id="gender-template">
+								<li class="grid grid-cols-2 sm:grid-cols-about p-1">
+									<h3 class="text-gray-500">Gender </h3>
+									<div class="flex">
+										<p>82.7% <i class="fa-solid fa-mars px-1"></i></p>
+										<p>32.4% <i class="fa-solid fa-venus px-1"></i></p>
+									</div>
+								</li>
+							</template>
+	
+							<!-- <template id="about-item-template">
+								<li class="grid grid-cols-2 sm:grid-cols-about p-1">
+									<h3 class="text-gray-500"></h3>
+									<p></p>
+								</li>
+							</template> -->
+	
+						</ul>
+					</div>
+	
+	
+					<div id="stats" class="hidden xs:text-lg p-3 sm:p-8 sm:pt-2 pt-2 mb-2">
+	
+						<ul class="mt-2" id="stats-list">
+	
+							<template id="stats-item-template">
+								<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1 ">
+									<div class="flex gap-4 justify-evenly xs:justify-between">
+										<h3 class="text-gray-500">HP</h3>
+										<p>45</p>
+									</div>
+									<progress value="45" max="100" class="w-full h-3 place-self-center rounded-md bg-gray-100 progress "></progress>
+								</li>
+							</template>
+	
+							<template id="stats-total-template">
+								<li class="grid xs:grid-cols-stats gap-x-4 gap-y-1 mt-3 p-1">
+									<div class="flex justify-evenly xs:justify-between gap-4">
+										<h3 class="text-gray-500">Total</h3>
+										<p>317</p>
+									</div>
+									<progress value="317" max="600" class="w-full h-3 place-self-center rounded-md bg-gray-100"></progress>
+								</li>
+							</template>
+	
+						</ul>
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		</template>
 	</main>
 
 	
