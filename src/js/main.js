@@ -112,9 +112,49 @@ function showPokemonInfo(ID, basic, breeding) {
     const {color, egg_groups, gender_rate, growth_rate } = breeding;
     
     makeHero(basic);
-    // makeAbout(basic);
+    makeAbout(basic);
     // makeStats();
     showPokemonUI();
+}
+
+function makeAbout(data) {
+    const { height, weight, abilities, base_experience } = data;
+    const items = { experience:base_experience, height, weight };
+    const abilitiesParsed = {abilities: abilitiesToString(abilities)};
+    const $about = document.getElementById('basic-info');
+
+    Object.entries(Object.assign({}, items, abilitiesParsed)).forEach(item => appendItem($about, createItem(item[0], item[1])))
+
+
+}
+
+function appendItem(parent, item) {
+    parent.appendChild(item);
+}
+
+function abilitiesToString(obj) {
+    return obj.map(innerObj => parseFromHyphen(innerObj.ability.name)).join(', ');
+}
+
+function createItem(name, value) {
+    const $itemTemplate = document.getElementById('about-item-template').content.cloneNode(true);
+
+    $itemTemplate.querySelector('h3').textContent = capitalizeFirstLetter(name);
+    $itemTemplate.querySelector('p').textContent = value;
+
+    return $itemTemplate;
+}
+
+function parseFromHyphen(string) {
+    return capitalizeFirstLetter(string.replaceAll('-', ' '));
+}
+
+function parseFromSnake(string) {
+    return capitalizeFirstLetter(string.replaceAll('_', ' '));
+}
+
+function parseAbilities(string) {
+
 }
 
 
@@ -133,7 +173,6 @@ function makeHero(data) {
 }
 
 function appendTags($element, $tagsElements) {
-    console.log($tagsElements)
     $tagsElements.forEach($tag => $element.appendChild($tag));
 }
 
