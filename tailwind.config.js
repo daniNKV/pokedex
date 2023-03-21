@@ -11,8 +11,8 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'main-pattern': "url('/src/img/abstract_background.jpg')",
-        'ul-background': "url('/src/img/pokeball_inverted.png')"
+        'main-pattern': "url('./src/img/abstract_background.jpg')",
+        'ul-background': "url('./src/img/pokeball_inverted.png')"
       },
 
       gridTemplateRows: {
