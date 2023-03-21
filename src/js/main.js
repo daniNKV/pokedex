@@ -83,12 +83,14 @@ async function initializePokemon(e) {
     showPokemonInfo(ID, pokemonBasic, pokemonSpecie);
     
 }
+
+
 function showPokemonInfo(ID, basic, breeding) {
     // const color = breeding.color.name;
     makeHero(basic);
     makeAbout(basic);
     makeBreeding(breeding);
-    // makeStats();
+    makeStats(basic.stats);
     showPokemonUI();
 }
 
@@ -109,7 +111,7 @@ function makeBreeding(data) {
 
 function createGenderElement(values) {
     const $genders = document.getElementById('gender-template').content.cloneNode(true);
-    console.log(values)
+
     $genders.getElementById('mars').textContent = values[0] + "% ";
     $genders.getElementById('venus').textContent = values[1] + "% ";
 
@@ -165,7 +167,6 @@ function makeHero(data) {
 }
 
 
-
 function createTags(names) {
     const $tagTemplate = document.getElementById('tag-template').content;
 
@@ -177,10 +178,32 @@ function createTags(names) {
     })
 }
 
+
 function getTagsNames(data) {
     const tags = Array.from(data, tag => tag.type.name );
 
     return tags;
+}
+
+function makeStats(data) {
+    const $statsList = document.getElementById('stats-list');
+    const $statItem = document.getElementById('stats-item-template');
+    const $statTotalItem = document.getElementById('stats-total-template');
+
+    data.forEach(item => appendItem($statsList, createStat($statItem, item.stat.name, item.base_stat)));
+
+    appendItem($statsList, createStat($statTotalItem, "Total", data.map(item => item.base_stat).reduce((a, b) => a + b)))
+}
+
+function createStat(template, name, value) {
+    const $stat = template.content.cloneNode(true);
+
+    $stat.querySelector('h3').textContent = capitalizeFirstLetter(parseFromSnake(name));
+    $stat.querySelector('p').textContent = value;
+    $stat.querySelector('progress').value = value;
+
+    return $stat;
+
 }
 
 
