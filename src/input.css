@@ -18,5 +18,15 @@
       margin: 0;
       -moz-appearance: textfield !important;
     }
+
+
  }
 
+ @layer components {
+  .selected {
+    @apply border-b-2 font-bold text-black;
+  }
+  .unselected {
+    @apply  text-gray-500;
+  }
+}

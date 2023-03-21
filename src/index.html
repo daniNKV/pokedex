@@ -69,13 +69,13 @@
 	
 				<div id="main-info" class=" bg-white rounded-b-2xl rounded-t-3xl">
 					<nav class="p-3 pt-14">
-						<ol class="flex justify-evenly text-xl">
-							<li class="border-b-2 font-bold cursor-pointer" data-button="about">About</li>
-							<li class="text-gray-500 cursor-pointer" data-button="stats">Base Stats</li>
-						</ol>
+						<ul id="nav-info" data-selected="0" class="flex justify-evenly text-xl">
+							<li class=" cursor-pointer selected" data-button="0" >About</li>
+							<li class=" cursor-pointer unselected" data-button="1" >Base Stats</li>
+						</ul>
 					</nav>
 	
-					<div id="about" class="hidden text-lg p-8 pt-2">
+					<div id="about" data-section="0" class="text-lg p-8 pt-2">
 						<ul id="basic-info" class="mt-2">
 	
 							<template id="about-item-template">
@@ -121,7 +121,7 @@
 					</div>
 	
 	
-					<div id="stats" class=" xs:text-lg p-3 sm:p-8 sm:pt-2 pt-2 mb-2">
+					<div id="stats" data-section="1" class="hidden xs:text-lg p-3 sm:p-8 sm:pt-2 pt-2 mb-2">
 	
 						<ul class="mt-2" id="stats-list">
 	

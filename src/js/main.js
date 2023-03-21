@@ -78,10 +78,40 @@ async function initializePokemon(e) {
     const ID = e.target.dataset.id;
     const pokemonBasic = await getPokemon(ID);
     const pokemonSpecie = await getPokemonSpecie(ID);
+
     hideList();
     appendSection(createSection());
     showPokemonInfo(ID, pokemonBasic, pokemonSpecie);
     
+    document.getElementById('nav-info').onclick = handleNavigation
+    
+}
+
+
+function handleNavigation(e) {
+    if (e.target.classList.contains('unselected')) {
+        const $nav = document.getElementById('nav-info');
+        const $selected = $nav.children[$nav.dataset.selected];
+        
+        document.querySelector(`[data-section="${$nav.dataset.selected}"]`).classList.add('hidden')
+        document.querySelector(`[data-section="${e.target.dataset.button}"]`).classList.remove('hidden')
+
+        $selected.classList.remove('selected');
+        $selected.classList.add('unselected');
+
+        e.target.classList.remove('unselected');
+        e.target.classList.add('selected')
+    
+        $nav.dataset.selected = e.target.dataset.button;
+
+        
+
+
+    } else {
+        return;
+    }
+
+
 }
 
 
