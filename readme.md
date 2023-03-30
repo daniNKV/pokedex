@@ -3,7 +3,7 @@
 <br />
 <p align="center">
     <a href="LINK">
-        <img src="src/img/poke_logo.png" alt="Logo" width="80" height="80">
+        <img src="src/img/poke_logo.png" alt="Logo" width="160" height="80">
     </a>
     <h3 align="center">Pokedex</h3>
     <p align="center">
