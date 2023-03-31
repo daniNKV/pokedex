@@ -1,28 +1,11 @@
+import { showError, showButton, hideButton, setActualPage } from './dom.js';
+import { checkError } from './utils.js';
+
 export function initializePagination(numberOfPages) {
     document.getElementById('total-pages').textContent = numberOfPages;
     document.getElementById('previous-button').classList.add('hidden');
     setActualPage(1);
-
 }
-
-function hideButton(name){ 
-    document.getElementById(`${name}`).classList.remove('absolute');
-    document.getElementById(`${name}`).classList.add('hidden');
-
-}
-
-function showButton(name) {
-    document.getElementById(`${name}`).classList.add('absolute');
-    document.getElementById(`${name}`).classList.remove('hidden');
-}
-
-
-function setActualPage(page) {
-    document.getElementById('pagination').dataset.selected = page;
-    document.getElementById('page-selection').value = page;
-}
-
-
 
 export function handlePagination(event, callbacks) {
     event.preventDefault();
