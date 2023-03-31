@@ -24,9 +24,7 @@ export function handlePagination(event, callbacks) {
         const destiny = Number($selection.value);
 
         checkError(destiny) ? goToPage(destiny, totalPages, callbacks) : showError($selection);
-    
     } 
-
 }
 
 async function seekPage(destinyPage, callbacks) {
@@ -34,7 +32,6 @@ async function seekPage(destinyPage, callbacks) {
     const pokemons = await getPageOfPokemons(destinyPage);
     fillPage(pokemons, getPokemonSprite);
 }
-
 
 function goPreviousPage(actual, total, callbacks) {
     const first = 1;
@@ -47,7 +44,6 @@ function goPreviousPage(actual, total, callbacks) {
     setActualPage(destiny);
 }
 
-
 function goNextPage(actual, total, callbacks) {
     const first = 1;
     const destiny = actual + 1;
@@ -58,7 +54,6 @@ function goNextPage(actual, total, callbacks) {
     seekPage(destiny, callbacks);
     setActualPage(destiny);
 }
-
 
 function goToPage(destiny, total, callbacks) {
     const first = 1;

@@ -5,8 +5,7 @@ import {
     convertKgToLb, 
     objectPropsToString,
     parseFromSnake 
-    } from '../utils.js';
-
+} from '../utils.js';
 import { showPokemonUI, appendToMain, appendTags } from '../dom.js';
 
 export function handleNavigation(e) {
@@ -38,7 +37,6 @@ export function showPokemonInfo(ID, basic, breeding) {
     showPokemonUI();
 }
 
-
 function makeBreeding(data) {
     const { egg_groups, gender_rate, growth_rate, habitat } = data;
     const items = { 
@@ -53,7 +51,6 @@ function makeBreeding(data) {
     Object.entries(items).forEach(item => $breeding.appendChild(createItem(item[0], capitalizeFirstLetter(item[1]))));
 }
 
-
 function createGenderElement(values) {
     const $genders = document.getElementById('gender-template').content.cloneNode(true);
 
@@ -62,7 +59,6 @@ function createGenderElement(values) {
 
     return $genders;
 }
-
 
 function makeAbout(data) {
     const { height, weight, abilities, base_experience } = data;
@@ -75,17 +71,13 @@ function makeAbout(data) {
     const $about = document.getElementById('basic-info');
 
     Object.entries(items).forEach(item => $about.appendChild(createItem(item[0], item[1])));
-
-
 }
-
 
 function createSection() {
     const $section = document.getElementById('pokemon-info-template').content.cloneNode(true);
 
     return $section;
 }
-
 
 function createItem(name, value) {
     const $itemTemplate = document.getElementById('about-item-template').content.cloneNode(true);
@@ -95,7 +87,6 @@ function createItem(name, value) {
 
     return $itemTemplate;
 }
-
 
 function makeHero(data) {
     const {name, id, sprites, types} = data;
@@ -111,7 +102,6 @@ function makeHero(data) {
 
 }
 
-
 function createTags(names) {
     const $tagTemplate = document.getElementById('tag-template').content;
 
@@ -122,7 +112,6 @@ function createTags(names) {
         return $newTag
     })
 }
-
 
 function getTagsNames(data) {
     const tags = Array.from(data, tag => tag.type.name );

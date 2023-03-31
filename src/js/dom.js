@@ -37,7 +37,6 @@ export function showError($element){
     
 }
 
-
 export function appendTags($element, $tagsElements) {
     $tagsElements.forEach($tag => $element.appendChild($tag));
 }
@@ -52,7 +51,6 @@ export function showButton(name) {
     document.getElementById(`${name}`).classList.add('absolute');
     document.getElementById(`${name}`).classList.remove('hidden');
 }
-
 
 export function setActualPage(page) {
     document.getElementById('pagination').dataset.selected = page;

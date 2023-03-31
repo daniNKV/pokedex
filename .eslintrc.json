@@ -11,5 +11,9 @@
         "sourceType": "module"
     },
     "rules": {
+        "indent": ["error", "tab"],
+        "no-return-assign": ["except-parens", 2],
+        // "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["el.textContent"] }]
+        "no-param-reassign": "off"
     }
 }

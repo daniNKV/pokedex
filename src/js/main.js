@@ -8,7 +8,6 @@ async function initialize() {
     const pokemons = await getPokemons();
     fillPage(pokemons, getPokemonSprite);
     initializePagination(Math.ceil(pokemons.count / 20));
-
 }
 
 async function initializePokemon(e) {
@@ -20,7 +19,6 @@ async function initializePokemon(e) {
     showPokemonInfo(ID, pokemonBasic, pokemonSpecie);
     document.getElementById('nav-info').onclick = handleNavigation    
 }
-
 
 document.addEventListener('load', initialize());
 document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e, { getPageOfPokemons, getPokemonSprite, fillPage }));
