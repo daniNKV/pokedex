@@ -3,21 +3,21 @@ export async function getPokemons() {
     return response.json();
 }
 
-export async function getPageOfPokemons(page) {
+export async function getPokemonsPage(page) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${(page - 1) * 20}&limit=20`);
     return await response.json();
 }
 
-export async function getPokemon(ID) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${ID}`);
+export async function getPokemon(id) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     return await response.json();
 }
 
-export async function getPokemonSpecie(ID) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${ID}`);
+export async function getPokemonSpecie(id) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
     return await response.json();
 }
 
-export function getPokemonSprite(ID) {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${ID}.svg`;
+export function getPokemonSprite(id) {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
 }

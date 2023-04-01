@@ -1,4 +1,4 @@
-import { getPokemons, getPokemon, getPokemonSpecie, getPokemonSprite, getPageOfPokemons } from './api.js';
+import { getPokemons, getPokemon, getPokemonSpecie, getPokemonSprite, getPokemonsPage } from './api.js';
 import { fillPage, } from './ui/home.js';
 import { initializePagination, handlePagination } from './pagination.js';
 import { hideList } from './dom.js';
@@ -21,5 +21,5 @@ async function initializePokemon(e) {
 }
 
 document.addEventListener('load', initialize());
-document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e, { getPageOfPokemons, getPokemonSprite, fillPage }));
+document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e, { getPokemonsPage, getPokemonSprite, fillPage }));
 document.getElementById('pokemons-list').addEventListener('click', (e) => initializePokemon(e));
