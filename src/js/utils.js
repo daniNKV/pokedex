@@ -11,9 +11,9 @@ function parseFromHyphen(string) {
 	return capitalizeFirstLetter(string.replaceAll('-', ' '));
 }
 
-export function objectPropsToString(obj, prop) {
-	return obj.map((innerObj) => {
-		const value = prop === 'name' ? innerObj.name : innerObj.ability.name;
+export function getPropertyValue(object, property) {
+	return object.map((innerObject) => {
+		const value = property === 'name' ? innerObject.name : innerObject.ability.name;
 		return parseFromHyphen(value);
 	}).join(', ');
 }
@@ -22,12 +22,13 @@ export function convertMetersToFeetAndInches(meters) {
 	const totalInches = meters * 39.3701;
 	const feet = Math.floor(totalInches / 12);
 	const inches = Math.round(totalInches % 12);
+	
 	return `${feet}'${inches}"`;
 }
 
 export function convertKgToLb(kg) {
-	const lb = kg * 2.20462;
-	return lb;
+	return kg * 2.20462;
+
 }
 
 export function parseToThreeDigits(number) {
@@ -35,15 +36,16 @@ export function parseToThreeDigits(number) {
 		return `00${number.toString()}`;
 	} if (number < 100) {
 		return `0${number.toString()}`;
-	} return number.toString();
+	} 
+	return number.toString();
 }
 
-export function parseFromSnake(string) {
+export function parseFromSnakeConvention(string) {
 	return capitalizeFirstLetter(string.replaceAll('_', ' '));
 }
 
-export function checkError(value) {
-	if (Number.isInteger(value) && (value > 0 && value <= 65)) {
+export function checkError(value, totalPages) {
+	if (Number.isInteger(value) && (value > 0 && value <= totalPages)) {
 		return true;
 	}
 

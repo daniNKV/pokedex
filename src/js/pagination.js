@@ -21,7 +21,7 @@ export function handlePagination(event, callbacks) {
 
     } else if (buttonClicked === "seek"){
         const selection = Number(document.getElementById('page-selection').value)
-        checkError(selection) ? goToPage(selection, totalPages, callbacks) : showPaginationError();
+        checkError(selection, totalPages) ? goToPage(selection, totalPages, callbacks) : showPaginationError();
     } 
 }
 

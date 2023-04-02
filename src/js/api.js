@@ -1,6 +1,6 @@
 export async function getPokemons() {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon");
-    return response.json();
+    return await response.json();
 }
 
 export async function getPokemonsPage(page) {

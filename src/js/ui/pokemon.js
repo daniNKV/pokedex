@@ -3,8 +3,8 @@ import {
     parseToThreeDigits, 
     convertMetersToFeetAndInches, 
     convertKgToLb, 
-    objectPropsToString,
-    parseFromSnake 
+    getPropertyValue,
+    parseFromSnakeConvention 
 } from '../utils.js';
 import { showPokemonInformation, appendToMain, appendTags } from '../dom.js';
 
@@ -39,7 +39,7 @@ function makeBreeding(specieInformation) {
     const { egg_groups, gender_rate, growth_rate, habitat } = specieInformation;
     const items = { 
         Habitat: habitat.name, 
-        ["Egg Groups"]: objectPropsToString(egg_groups, "name"),
+        ["Egg Groups"]: getPropertyValue(egg_groups, "name"),
         ["Growth Rate"]: growth_rate.name
     }
     
@@ -64,7 +64,7 @@ function makeAbout(pokemonAttributes) {
         Experience: base_experience, 
         Height: height*10 + " cm (" + convertMetersToFeetAndInches(height/10) + ")", 
         Weight: weight/10 + " kg (" + convertKgToLb(weight/10).toFixed(2) + " lb)", 
-        Abilities: objectPropsToString(abilities, "ability") };
+        Abilities: getPropertyValue(abilities, "ability") };
 
     const $about = document.getElementById('basic-info');
 
@@ -72,9 +72,8 @@ function makeAbout(pokemonAttributes) {
 }
 
 function createSection() {
-    const $section = document.getElementById('pokemon-info-template').content.cloneNode(true);
+    return document.getElementById('pokemon-info-template').content.cloneNode(true);
 
-    return $section;
 }
 
 function createItem(name, value) {
@@ -112,13 +111,11 @@ function createTags(names) {
 }
 
 function getTagsNames(pokemonTypes) {
-    const tags = Array.from(pokemonTypes, tag => tag.type.name );
-
-    return tags;
+    return Array.from(pokemonTypes, tag => tag.type.name );
 }
 
 function makeStats(pokemonStats) {
-    const $statsElement= document.getElementById('stats-list');
+    const $statsElement= document.getElementById('stats');
     const $statItem = document.getElementById('stats-item-template');
     const $statTotalItem = document.getElementById('stats-total-template');
     const totalStats = pokemonStats.map(item => item.base_stat).reduce((a, b) => a + b);
@@ -130,7 +127,7 @@ function makeStats(pokemonStats) {
 function createStat(template, name, value) {
     const $stat = template.content.cloneNode(true);
 
-    $stat.querySelector('h3').textContent = capitalizeFirstLetter(parseFromSnake(name));
+    $stat.querySelector('h3').textContent = capitalizeFirstLetter(parseFromSnakeConvention(name));
     $stat.querySelector('p').textContent = value;
     $stat.querySelector('progress').value = value;
 
