@@ -1,5 +1,5 @@
 import { showPaginationError, showButton, hideButton, setCurrent } from './dom.js';
-import { checkError } from './utils.js';
+import { checkError } from '../utils.js';
 
 export function initializePagination(totalPages) {
     const FIRST_PAGE = 1;

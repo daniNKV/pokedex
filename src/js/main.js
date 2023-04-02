@@ -1,7 +1,7 @@
 import { getPokemons, getPokemon, getPokemonSpecie, getPokemonSprite, getPokemonsPage } from './api.js';
 import { fillPage, } from './ui/home.js';
-import { initializePagination, handlePagination } from './pagination.js';
-import { hidePokemons } from './dom.js';
+import { initializePagination, handlePagination } from './ui/pagination.js';
+import { hidePokemons } from './ui/dom.js';
 import { showPokemon, handleNavigation } from './ui/pokemon.js';
 
 async function initialize() {

@@ -6,7 +6,7 @@ import {
     getPropertyValue,
     parseFromSnakeConvention 
 } from '../utils.js';
-import { showPokemonInformation, appendToMain, appendTags } from '../dom.js';
+import { showPokemonInformation, appendToMain, appendTags } from './dom.js';
 
 export function handleNavigation(e) {
     if (e.target.classList.contains('unselected')) {
