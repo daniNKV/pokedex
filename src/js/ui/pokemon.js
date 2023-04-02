@@ -6,7 +6,7 @@ import {
     objectPropsToString,
     parseFromSnake 
 } from '../utils.js';
-import { showPokemonUI, appendToMain, appendTags } from '../dom.js';
+import { showPokemonInformation, appendToMain, appendTags } from '../dom.js';
 
 export function handleNavigation(e) {
     if (e.target.classList.contains('unselected')) {
@@ -26,19 +26,17 @@ export function handleNavigation(e) {
     }
 }
 
-export function showPokemonInfo(ID, basic, breeding) {
-    // const color = breeding.color.name;
+export function showPokemon(basic, breeding) {
     appendToMain(createSection());
-
     makeHero(basic);
     makeAbout(basic);
     makeBreeding(breeding);
     makeStats(basic.stats);
-    showPokemonUI();
+    showPokemonInformation();
 }
 
-function makeBreeding(data) {
-    const { egg_groups, gender_rate, growth_rate, habitat } = data;
+function makeBreeding(specieInformation) {
+    const { egg_groups, gender_rate, growth_rate, habitat } = specieInformation;
     const items = { 
         Habitat: habitat.name, 
         ["Egg Groups"]: objectPropsToString(egg_groups, "name"),
@@ -51,17 +49,17 @@ function makeBreeding(data) {
     Object.entries(items).forEach(item => $breeding.appendChild(createItem(item[0], capitalizeFirstLetter(item[1]))));
 }
 
-function createGenderElement(values) {
+function createGenderElement(genderProbabilities) {
     const $genders = document.getElementById('gender-template').content.cloneNode(true);
 
-    $genders.getElementById('mars').textContent = values[0] + "% ";
-    $genders.getElementById('venus').textContent = values[1] + "% ";
+    $genders.getElementById('mars').textContent = genderProbabilities[0] + "% ";
+    $genders.getElementById('venus').textContent = genderProbabilities[1] + "% ";
 
     return $genders;
 }
 
-function makeAbout(data) {
-    const { height, weight, abilities, base_experience } = data;
+function makeAbout(pokemonAttributes) {
+    const { height, weight, abilities, base_experience } = pokemonAttributes;
     const items = { 
         Experience: base_experience, 
         Height: height*10 + " cm (" + convertMetersToFeetAndInches(height/10) + ")", 
@@ -88,8 +86,8 @@ function createItem(name, value) {
     return $itemTemplate;
 }
 
-function makeHero(data) {
-    const {name, id, sprites, types} = data;
+function makeHero(pokemonProfile) {
+    const {name, id, sprites, types} = pokemonProfile;
     const $name = document.getElementById('pokemon-name');
     const $id = document.getElementById('pokemon-id');
     const $img = document.getElementById('pokemon-image');
@@ -113,20 +111,20 @@ function createTags(names) {
     })
 }
 
-function getTagsNames(data) {
-    const tags = Array.from(data, tag => tag.type.name );
+function getTagsNames(pokemonTypes) {
+    const tags = Array.from(pokemonTypes, tag => tag.type.name );
 
     return tags;
 }
 
-function makeStats(data) {
-    const $statsList = document.getElementById('stats-list');
+function makeStats(pokemonStats) {
+    const $statsElement= document.getElementById('stats-list');
     const $statItem = document.getElementById('stats-item-template');
     const $statTotalItem = document.getElementById('stats-total-template');
-
-    data.forEach(item => $statsList.appendChild(createStat($statItem, item.stat.name, item.base_stat)));
-
-    $statsList.appendChild(createStat($statTotalItem, "Total", data.map(item => item.base_stat).reduce((a, b) => a + b)))
+    const totalStats = pokemonStats.map(item => item.base_stat).reduce((a, b) => a + b);
+    
+    pokemonStats.forEach(pokemonStat => $statsElement.appendChild(createStat($statItem, pokemonStat.stat.name, pokemonStat.base_stat)));
+    $statsElement.appendChild(createStat($statTotalItem, "Total", totalStats));
 }
 
 function createStat(template, name, value) {

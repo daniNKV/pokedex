@@ -1,11 +1,12 @@
 import { getPokemons, getPokemon, getPokemonSpecie, getPokemonSprite, getPokemonsPage } from './api.js';
 import { fillPage, } from './ui/home.js';
 import { initializePagination, handlePagination } from './pagination.js';
-import { hideList } from './dom.js';
-import { showPokemonInfo, handleNavigation } from './ui/pokemon.js';
+import { hidePokemons } from './dom.js';
+import { showPokemon, handleNavigation } from './ui/pokemon.js';
 
 async function initialize() {
     const pokemons = await getPokemons();
+
     fillPage(pokemons, getPokemonSprite);
     initializePagination(Math.ceil(pokemons.count / 20));
 }
@@ -15,8 +16,9 @@ async function initializePokemon(e) {
     const pokemonBasic = await getPokemon(ID);
     const pokemonSpecie = await getPokemonSpecie(ID);
 
-    hideList();
-    showPokemonInfo(ID, pokemonBasic, pokemonSpecie);
+    hidePokemons();
+    showPokemon(pokemonBasic, pokemonSpecie);
+
     document.getElementById('nav-info').onclick = handleNavigation    
 }
 

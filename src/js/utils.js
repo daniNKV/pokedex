@@ -2,18 +2,10 @@ export function capitalizeFirstLetter(string) {
 	return string[0].toUpperCase().concat(string.slice(1));
 }
 
-export function getID(url) {
+export function getId(url) {
 	const numbersRegex = /\d/g;
 	return url.match(numbersRegex).slice(1).join('');
 }
-
-// export function eggGroupsToString(obj) {
-//     return obj.map(innerObj => parseFromHyphen(innerObj.name)).join(', ');
-// }
-
-// export function abilitiesToString(obj) {
-//     return obj.map(innerObj => parseFromHyphen(innerObj.ability.name)).join(', ');
-// }
 
 function parseFromHyphen(string) {
 	return capitalizeFirstLetter(string.replaceAll('-', ' '));

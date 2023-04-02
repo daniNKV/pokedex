@@ -5,35 +5,36 @@ export function appendToMain($element) {
     
 }
 
-function hidePokemonUI() {
+function hidePokemonInformation() {
     document.getElementById('pokemon-info').remove();
 
 }
 
-function showList() {
+function showPokemons() {
     document.getElementById('pokemons-list').classList.remove('hidden');
     document.getElementById('pagination').classList.remove('hidden');
-    hidePokemonUI();
+    hidePokemonInformation();
 }
 
-export function showPokemonUI() {
+export function showPokemonInformation() {
     document.getElementById('pokemon-info').classList.remove("hidden");
-    document.getElementById('close').addEventListener('click', showList);
+    document.getElementById('close').addEventListener('click', showPokemons);
 }
 
 
-export function hideList() {
+export function hidePokemons() {
     document.getElementById('pokemons-list').classList.add('hidden');
     document.getElementById('pagination').classList.add('hidden');
 }
 
 
-export function showError($element){
+export function showPaginationError(){
+    const $element = document.getElementById('page-selection')
+    const DELAY_IN_MS = 2000
     $element.style.borderColor = "red";
-    
     setTimeout(() => {
         $element.style.borderColor = "initial";
-    }, 2000)
+    }, DELAY_IN_MS)
     
 }
 
@@ -52,7 +53,7 @@ export function showButton(name) {
     document.getElementById(`${name}`).classList.remove('hidden');
 }
 
-export function setActualPage(page) {
+export function setCurrent(page) {
     document.getElementById('pagination').dataset.selected = page;
     document.getElementById('page-selection').value = page;
 }

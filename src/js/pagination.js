@@ -1,10 +1,11 @@
-import { showError, showButton, hideButton, setActualPage } from './dom.js';
+import { showPaginationError, showButton, hideButton, setCurrent } from './dom.js';
 import { checkError } from './utils.js';
 
-export function initializePagination(numberOfPages) {
-    document.getElementById('total-pages').textContent = numberOfPages;
+export function initializePagination(totalPages) {
+    const FIRST_PAGE = 1;
+    document.getElementById('total-pages').textContent = totalPages;
     document.getElementById('previous-button').classList.add('hidden');
-    setActualPage(1);
+    setCurrent(FIRST_PAGE);
 }
 
 export function handlePagination(event, callbacks) {
@@ -12,18 +13,15 @@ export function handlePagination(event, callbacks) {
     const actualPage = Number(document.getElementById('pagination').dataset.selected);
     const totalPages = Number(document.getElementById('total-pages').textContent);
     const buttonClicked = event.target.dataset.button;
-    // const pageInfo = {actualPage, totalPages }
     if (buttonClicked === "next") {
-        goNextPage(actualPage, totalPages, callbacks);
+        setNextPage(actualPage, totalPages, callbacks);
 
     } else if (buttonClicked === "previous") {
-        goPreviousPage(actualPage, totalPages, callbacks);
+        setPreviousPage(actualPage, totalPages, callbacks);
 
     } else if (buttonClicked === "seek"){
-        const $selection = document.getElementById('page-selection')
-        const destiny = Number($selection.value);
-
-        checkError(destiny) ? goToPage(destiny, totalPages, callbacks) : showError($selection);
+        const selection = Number(document.getElementById('page-selection').value)
+        checkError(selection) ? goToPage(selection, totalPages, callbacks) : showPaginationError();
     } 
 }
 
@@ -33,38 +31,38 @@ async function seekPage(destinyPage, callbacks) {
     fillPage(pokemons, getPokemonSprite);
 }
 
-function goPreviousPage(actual, total, callbacks) {
+function setPreviousPage(actual, total, callbacks) {
     const first = 1;
-    const destiny = actual - 1;
+    const previousPage = actual - 1;
 
-    destiny === first ? hideButton('previous-button') : ""; 
-    destiny === total - 1 ? showButton('next-button') : ""; 
+    previousPage === first ? hideButton('previous-button') : ""; 
+    previousPage === total - 1 ? showButton('next-button') : ""; 
     
-    seekPage(destiny, callbacks);
-    setActualPage(destiny);
+    seekPage(previousPage, callbacks);
+    setCurrent(previousPage);
 }
 
-function goNextPage(actual, total, callbacks) {
+function setNextPage(actual, total, callbacks) {
     const first = 1;
-    const destiny = actual + 1;
+    const nextPage = actual + 1;
     
-    destiny === total ? hideButton('next-button') : ""; 
-    destiny === first + 1 ? showButton('previous-button') : ""; 
+    nextPage === total ? hideButton('next-button') : ""; 
+    nextPage === first + 1 ? showButton('previous-button') : ""; 
 
-    seekPage(destiny, callbacks);
-    setActualPage(destiny);
+    seekPage(nextPage, callbacks);
+    setCurrent(nextPage);
 }
 
-function goToPage(destiny, total, callbacks) {
+function goToPage(destination, total, callbacks) {
     const first = 1;
     
-    destiny === first ? hideButton('previous-button') : ""; 
-    destiny === total ? hideButton('next-button') : ""; 
+    destination === first ? hideButton('previous-button') : ""; 
+    destination === total ? hideButton('next-button') : ""; 
 
-    destiny !== first ? showButton('previous-button') : "";
-    destiny !== total ? showButton ('next-button') : "";
+    destination !== first ? showButton('previous-button') : "";
+    destination !== total ? showButton('next-button') : "";
     
-    seekPage(destiny, callbacks);
-    setActualPage(destiny);
+    seekPage(destination, callbacks);
+    setCurrent(destination);
 }
 

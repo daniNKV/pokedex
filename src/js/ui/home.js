@@ -1,10 +1,10 @@
-import { capitalizeFirstLetter, getID } from '../utils.js';
+import { capitalizeFirstLetter, getId } from '../utils.js';
 
 function createPokemonTile(pokemon, sprite) {
     const $template = document.getElementById('tile-template').content.cloneNode(true);
 
     const { name, url } = pokemon;
-    const ID = getID(url);
+    const ID = getId(url);
     
     $template.querySelector('p').textContent = capitalizeFirstLetter(name);
     $template.querySelector('img').src = sprite(ID);
