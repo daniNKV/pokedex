@@ -136,19 +136,13 @@ function createStat(template, name, value) {
 }
 
 function getGenderProbability(genderRate) {
-    if (genderRate === -1) {
-      return [0, 0];
-    } else if (genderRate === 0) {
-      return [0, 0];
-    } else if (genderRate === 1) {
-      return [100, 0];
-    } else if (genderRate === 2) {
-      return [50, 50];
-    } else if (genderRate >= 3 && genderRate <= 7) {
-      const femaleChance = 100 / (genderRate * 2);
-      return [100 - femaleChance, femaleChance];
-    } else if (genderRate === 8) {
-      return [0, 100];
+    if (genderRate !== -1) {
+        const femaleChance = (genderRate / 8) * 100;
+        const maleChance = (femaleChance === 100) ? 0 : 100 - femaleChance;
+
+        return [maleChance, femaleChance];
+    } else {
+        return [0, 0];
     }
   }
 
