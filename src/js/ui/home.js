@@ -14,13 +14,13 @@ function createPokemonTile(pokemon, sprite) {
     return $template;
 }
 
-function appendPokemon($pokemon) {
-    const $list = document.getElementById('pokemons-list');
-    $list.appendChild($pokemon);
+function append($pokemon) {
+    const $pokemons = document.getElementById('pokemons');
+    $pokemons.appendChild($pokemon);
 }
 
 export function fillPage(pokemons, sprites) {
-    document.getElementById('pokemons-list').innerHTML = "";
-    pokemons.results.forEach(pokemon => appendPokemon(createPokemonTile(pokemon, sprites)));
+    document.getElementById('pokemons').innerHTML = "";
+    pokemons.results.forEach(pokemon => append(createPokemonTile(pokemon, sprites)));
 }
 

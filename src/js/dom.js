@@ -11,7 +11,7 @@ function hidePokemonInformation() {
 }
 
 function showPokemons() {
-    document.getElementById('pokemons-list').classList.remove('hidden');
+    document.getElementById('pokemons').classList.remove('hidden');
     document.getElementById('pagination').classList.remove('hidden');
     hidePokemonInformation();
 }
@@ -23,7 +23,7 @@ export function showPokemonInformation() {
 
 
 export function hidePokemons() {
-    document.getElementById('pokemons-list').classList.add('hidden');
+    document.getElementById('pokemons').classList.add('hidden');
     document.getElementById('pagination').classList.add('hidden');
 }
 

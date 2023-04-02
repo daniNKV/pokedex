@@ -24,4 +24,4 @@ async function initializePokemon(e) {
 
 document.addEventListener('load', initialize());
 document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e, { getPokemonsPage, getPokemonSprite, fillPage }));
-document.getElementById('pokemons-list').addEventListener('click', (e) => initializePokemon(e));
+document.getElementById('pokemons').addEventListener('click', (e) => initializePokemon(e));
