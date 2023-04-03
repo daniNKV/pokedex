@@ -36,11 +36,8 @@ function setPreviousPage(actual, last, callbacks) {
     const penultimate = last - 1;
     const previousPage = actual - 1;
 
-    if (previousPage === FIRST) {
-        hideButton('previous-button');
-    } else if(previousPage === penultimate) {
-        showButton('next-button');
-    }
+    if (previousPage === FIRST) hideButton('previous-button');
+    else if(previousPage === penultimate) showButton('next-button');
 
     seekPage(previousPage, callbacks);
     setCurrent(previousPage);
@@ -50,11 +47,9 @@ function setNextPage(actual, last, callbacks) {
     const FIRST = 1;
     const nextPage = actual + 1;
 
-    if (nextPage === last){
-        hideButton('next-button');
-    } else if (actual === FIRST) {
-        showButton('previous-button');
-    }
+    if (nextPage === last) hideButton('next-button');
+    else if (actual === FIRST) showButton('previous-button');
+    
     seekPage(nextPage, callbacks);
     setCurrent(nextPage);
 }
