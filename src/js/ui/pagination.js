@@ -31,37 +31,48 @@ async function seekPage(destinyPage, callbacks) {
     fillPage(pokemons, getPokemonSprite);
 }
 
-function setPreviousPage(actual, total, callbacks) {
-    const first = 1;
+function setPreviousPage(actual, last, callbacks) {
+    const FIRST = 1;
+    const penultimate = last - 1;
     const previousPage = actual - 1;
 
-    previousPage === first ? hideButton('previous-button') : ""; 
-    previousPage === total - 1 ? showButton('next-button') : ""; 
-    
+    if (previousPage === FIRST) {
+        hideButton('previous-button');
+    } else if(previousPage === penultimate) {
+        showButton('next-button');
+    }
+
     seekPage(previousPage, callbacks);
     setCurrent(previousPage);
 }
 
-function setNextPage(actual, total, callbacks) {
-    const first = 1;
+function setNextPage(actual, last, callbacks) {
+    const FIRST = 1;
     const nextPage = actual + 1;
-    
-    nextPage === total ? hideButton('next-button') : ""; 
-    nextPage === first + 1 ? showButton('previous-button') : ""; 
 
+    if (nextPage === last){
+        hideButton('next-button');
+    } else if (actual === FIRST) {
+        showButton('previous-button');
+    }
     seekPage(nextPage, callbacks);
     setCurrent(nextPage);
 }
 
-function goToPage(destination, total, callbacks) {
-    const first = 1;
+function goToPage(destination, last, callbacks) {
+    const FIRST = 1;
     
-    destination === first ? hideButton('previous-button') : ""; 
-    destination === total ? hideButton('next-button') : ""; 
+    if (destination === FIRST) {
+        hideButton('previous-button');
+        showButton('next-button');
+    } else if (destination === last) {
+        hideButton('next-button');
+        showButton('previous-button');
+    } else {   
+        showButton('previous-button');
+        showButton('next-button');
+    }
 
-    destination !== first ? showButton('previous-button') : "";
-    destination !== total ? showButton('next-button') : "";
-    
     seekPage(destination, callbacks);
     setCurrent(destination);
 }
