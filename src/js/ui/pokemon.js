@@ -7,8 +7,19 @@ import {
     parseFromSnakeConvention 
 } from '../utils.js';
 import { showPokemonInformation, appendToMain, appendTags } from './dom.js';
+import { hidePokemons } from './dom.js';
 
-export function handleNavigation(e) {
+export default async function initializePokemon(e, callback) {
+    const ID = e.target.dataset.id;
+    const { main, specie } = await callback(ID);
+    
+    hidePokemons();
+    showPokemon(main, specie);
+
+    document.getElementById('nav-info').onclick = handleNavigation;
+}
+
+function handleNavigation(e) {
     if (e.target.classList.contains('unselected')) {
         const $nav = document.getElementById('nav-info');
         const $selected = $nav.children[$nav.dataset.selected];
@@ -26,7 +37,7 @@ export function handleNavigation(e) {
     }
 }
 
-export function showPokemon(basic, breeding) {
+function showPokemon(basic, breeding) {
     appendToMain(createSection());
     makeHero(basic);
     makeAbout(basic);
