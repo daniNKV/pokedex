@@ -42,14 +42,14 @@ export function appendTags($element, $tagsElements) {
 }
 
 export function hideButton(name){ 
-    document.getElementById(`${name}`).classList.remove('absolute');
-    document.getElementById(`${name}`).classList.add('hidden');
+    document.getElementById(name).classList.remove('absolute');
+    document.getElementById(name).classList.add('hidden');
 
 }
 
 export function showButton(name) {
-    document.getElementById(`${name}`).classList.add('absolute');
-    document.getElementById(`${name}`).classList.remove('hidden');
+    document.getElementById(name).classList.add('absolute');
+    document.getElementById(name).classList.remove('hidden');
 }
 
 export function setCurrent(page) {
