@@ -22,7 +22,7 @@ export function showPokemonInformation() {
 
 
 export function hidePokemons() {
-    document.getElementById('pokemons-list').classList.add('hidden');
+    document.getElementById('pokemons').classList.add('hidden');
     document.getElementById('pagination').classList.add('hidden');
 }
 
