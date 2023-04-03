@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter, getId } from '../utils.js';
+import { capitalizeFirstLetter, getId } from '../utilities/utils.js';
 
 function createPokemonTile(pokemon, sprite) {
     const $template = document.getElementById('tile-template').content.cloneNode(true);

@@ -5,7 +5,7 @@ import {
     convertKgToLb, 
     getPropertyValue,
     parseFromSnakeConvention 
-} from '../utils.js';
+} from '../utilities/utils.js';
 import { showPokemonInformation, appendToMain, appendTags } from './dom.js';
 import { hidePokemons } from './dom.js';
 
