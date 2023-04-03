@@ -1,11 +1,12 @@
-import { getPokemons, getPokemon, getPokemonSpecie, getPokemonSprite, getPokemonsPage } from './api.js';
+import { getPokemon, getPokemonSpecie, getPokemonSprite, getPokemons} from './api/pokemon.js';
 import { fillPage, } from './ui/home.js';
 import { initializePagination, handlePagination } from './ui/pagination.js';
 import { hidePokemons } from './ui/dom.js';
 import { showPokemon, handleNavigation } from './ui/pokemon.js';
 
 async function initialize() {
-    const pokemons = await getPokemons();
+    const FIRST_PAGE = 1;
+    const pokemons = await getPokemons(FIRST_PAGE);
 
     fillPage(pokemons, getPokemonSprite);
     initializePagination(Math.ceil(pokemons.count / 20));
