@@ -25,9 +25,9 @@ export function handlePagination(event, callbacks) {
     } 
 }
 
-async function seekPage(destinyPage, callbacks) {
-    const { getPokemonsPage, getPokemonSprite, fillPage } = callbacks;
-    const pokemons = await getPokemonsPage(destinyPage);
+async function seekPage(page, callbacks) {
+    const { getPokemons, getPokemonSprite, fillPage } = callbacks;
+    const pokemons = await getPokemons(page);
     fillPage(pokemons, getPokemonSprite);
 }
 
