@@ -12,7 +12,7 @@ import { hidePokemons } from './dom.js';
 export default async function initializePokemon(e, callback) {
     const ID = e.target.dataset.id;
     const { main, specie } = await callback(ID);
-    
+    console.log(callback(ID))
     hidePokemons();
     showPokemon(main, specie);
 
@@ -102,7 +102,10 @@ function makeHero(pokemonProfile) {
     const $id = document.getElementById('pokemon-id');
     const $img = document.getElementById('pokemon-image');
     const $tags = document.getElementById('tags');
-
+    $img.onerror = function() {
+        this.onerror = null;    
+        this.src = sprites.other["official-artwork"].front_default;
+    }          
     $name.textContent = capitalizeFirstLetter(name);
     $id.textContent = "#" + parseToThreeDigits(id);
     $img.src = sprites.other.dream_world.front_default;
