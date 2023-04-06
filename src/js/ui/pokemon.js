@@ -9,34 +9,6 @@ import {
 import { showPokemonInformation, appendToMain, appendTags } from './dom.js';
 import { hidePokemons } from './dom.js';
 
-export default async function initializePokemon(e, callback) {
-    const ID = e.target.dataset.id;
-    const { main, specie } = await callback(ID);
-    console.log(callback(ID))
-    hidePokemons();
-    showPokemon(main, specie);
-
-    document.getElementById('nav-info').onclick = handleNavigation;
-}
-
-function handleNavigation(e) {
-    if (e.target.classList.contains('unselected')) {
-        const $nav = document.getElementById('nav-info');
-        const $selected = $nav.children[$nav.dataset.selected];
-        
-        document.querySelector(`[data-section="${$nav.dataset.selected}"]`).classList.add('hidden')
-        document.querySelector(`[data-section="${e.target.dataset.button}"]`).classList.remove('hidden')
-
-        $selected.classList.remove('selected');
-        $selected.classList.add('unselected');
-
-        e.target.classList.remove('unselected');
-        e.target.classList.add('selected')
-    
-        $nav.dataset.selected = e.target.dataset.button;
-    }
-}
-
 function showPokemon(basic, breeding) {
     appendToMain(createSection());
     makeHero(basic);
@@ -45,6 +17,46 @@ function showPokemon(basic, breeding) {
     makeStats(basic.stats);
     showPokemonInformation();
 }
+
+export default async function initializePokemon(e, callback) {
+    const ID = e.target.dataset.id;
+    const { main, specie } = await callback(ID);
+    hidePokemons();
+    showPokemon(main, specie);
+
+    document.getElementById('nav-info').onclick = handleNavigation;
+}
+
+function makeHero(pokemonProfile) {
+    const {name, id, sprites, types} = pokemonProfile;
+    const $name = document.getElementById('pokemon-name');
+    const $id = document.getElementById('pokemon-id');
+    const $img = document.getElementById('pokemon-image');
+    const $tags = document.getElementById('tags');
+    $img.onerror = function() {
+        this.onerror = null;    
+        this.src = sprites.other["official-artwork"].front_default;
+    }          
+    $name.textContent = capitalizeFirstLetter(name);
+    $id.textContent = "#" + parseToThreeDigits(id);
+    $img.src = sprites.other.dream_world.front_default;
+    appendTags($tags, createTags(getTagsNames(types)));
+
+}
+
+function makeAbout(pokemonAttributes) {
+    const { height, weight, abilities, base_experience } = pokemonAttributes;
+    const items = { 
+        Experience: base_experience, 
+        Height: height*10 + " cm (" + convertMetersToFeetAndInches(height/10) + ")", 
+        Weight: weight/10 + " kg (" + convertKgToLb(weight/10).toFixed(2) + " lb)", 
+        Abilities: getPropertyValue(abilities, "ability") };
+
+    const $about = document.getElementById('basic-info');
+
+    Object.entries(items).forEach(item => $about.appendChild(createItem(item[0], item[1])));
+}
+
 
 function makeBreeding(specieInformation) {
     const { egg_groups, gender_rate, growth_rate, habitat } = specieInformation;
@@ -69,18 +81,6 @@ function createGenderElement(genderProbabilities) {
     return $genders;
 }
 
-function makeAbout(pokemonAttributes) {
-    const { height, weight, abilities, base_experience } = pokemonAttributes;
-    const items = { 
-        Experience: base_experience, 
-        Height: height*10 + " cm (" + convertMetersToFeetAndInches(height/10) + ")", 
-        Weight: weight/10 + " kg (" + convertKgToLb(weight/10).toFixed(2) + " lb)", 
-        Abilities: getPropertyValue(abilities, "ability") };
-
-    const $about = document.getElementById('basic-info');
-
-    Object.entries(items).forEach(item => $about.appendChild(createItem(item[0], item[1])));
-}
 
 function createSection() {
     return document.getElementById('pokemon-info-template').content.cloneNode(true);
@@ -96,22 +96,6 @@ function createItem(name, value) {
     return $itemTemplate;
 }
 
-function makeHero(pokemonProfile) {
-    const {name, id, sprites, types} = pokemonProfile;
-    const $name = document.getElementById('pokemon-name');
-    const $id = document.getElementById('pokemon-id');
-    const $img = document.getElementById('pokemon-image');
-    const $tags = document.getElementById('tags');
-    $img.onerror = function() {
-        this.onerror = null;    
-        this.src = sprites.other["official-artwork"].front_default;
-    }          
-    $name.textContent = capitalizeFirstLetter(name);
-    $id.textContent = "#" + parseToThreeDigits(id);
-    $img.src = sprites.other.dream_world.front_default;
-    appendTags($tags, createTags(getTagsNames(types)));
-
-}
 
 function createTags(names) {
     const $tagTemplate = document.getElementById('tag-template').content;
@@ -146,7 +130,26 @@ function createStat(template, name, value) {
     $stat.querySelector('progress').value = value;
 
     return $stat;
+    
+}
 
+
+function handleNavigation(e) {
+    if (e.target.classList.contains('unselected')) {
+        const $nav = document.getElementById('nav-info');
+        const $selected = $nav.children[$nav.dataset.selected];
+        
+        document.querySelector(`[data-section="${$nav.dataset.selected}"]`).classList.add('hidden')
+        document.querySelector(`[data-section="${e.target.dataset.button}"]`).classList.remove('hidden')
+
+        $selected.classList.remove('selected');
+        $selected.classList.add('unselected');
+
+        e.target.classList.remove('unselected');
+        e.target.classList.add('selected')
+    
+        $nav.dataset.selected = e.target.dataset.button;
+    }
 }
 
 function getGenderProbability(genderRate) {
