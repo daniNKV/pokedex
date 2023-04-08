@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter, getId } from '../utils.js';
+import { capitalizeFirstLetter, getId, parseToThreeDigits } from '../utilities/utils.js';
 
 function createPokemonTile(pokemon, sprite) {
     const $template = document.getElementById('tile-template').content.cloneNode(true);
@@ -8,6 +8,11 @@ function createPokemonTile(pokemon, sprite) {
     
     $template.querySelector('p').textContent = capitalizeFirstLetter(name);
     $template.querySelector('img').src = sprite(ID);
+    $template.querySelector('img').alt = capitalizeFirstLetter(name);
+    $template.querySelector('img').onerror = function() {
+        this.onerror = null;    
+        this.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${parseToThreeDigits(ID)}.png`
+    }           
     $template.querySelector('img').dataset.id = ID;
     $template.querySelector('div').dataset.id = ID;
     
