@@ -3,14 +3,14 @@ import {
     getPokemon as getPokemonFromApi,
     getPokemonSpecie as getPokemonSpecieFromApi,
 
-} from '../api/pokemon.js';
+} from './api/pokemon.js';
 
 import {
     getPokemons as getPokemonsFromStorage,
     getPokemon as getPokemonFromStorage,
     savePokemons,
     savePokemon
-} from '../storage/pokemon.js';
+} from './storage/pokemon.js';
 
 const POKEMONS_LIMIT = 20;
 
