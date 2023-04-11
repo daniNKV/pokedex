@@ -1,5 +1,5 @@
-import { 
-    getPokemons as getPokemonsFromApi, 
+import {
+    getPokemons as getPokemonsFromApi,
     getPokemon as getPokemonFromApi,
     getPokemonSpecie as getPokemonSpecieFromApi,
 
@@ -9,7 +9,7 @@ import {
     getPokemons as getPokemonsFromStorage,
     getPokemon as getPokemonFromStorage,
     savePokemons,
-    savePokemon
+    savePokemon,
 } from './storage/pokemon.js';
 
 const POKEMONS_LIMIT = 20;
@@ -37,8 +37,7 @@ export async function getPokemon(id) {
     } catch (e) {
         const main = await getPokemonFromApi(id);
         const specie = await getPokemonSpecieFromApi(id);
-        pokemon = { main: main, specie: specie };
-        
+        pokemon = { main, specie };
         savePokemon(id, pokemon);
     }
 

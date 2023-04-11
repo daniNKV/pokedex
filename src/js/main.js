@@ -1,8 +1,8 @@
-import { getPokemonSprite } from './api/pokemon.js';
+import { getPokemonSprite } from './services/api/pokemon.js';
 import { getPokemons, getPokemon } from './services/pokemon.js';
 import { initializePagination, handlePagination } from './ui/pagination.js';
-import { fillPage, } from './ui/home.js';
-import  initializePokemon  from './ui/pokemon.js';
+import fillPage from './ui/home.js';
+import initializePokemon from './ui/pokemon.js';
 
 async function initialize() {
     const FIRST_PAGE = 1;

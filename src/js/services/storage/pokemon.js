@@ -1,4 +1,3 @@
-
 function getPokemonsId(page, limit) {
     return `pokemons-${page}-${limit}`;
 }
@@ -16,7 +15,7 @@ export function getPokemons(page, limit) {
 }
 
 export function savePokemons(page, limit, pokemons) {
-    if (page === undefined || limit === undefined || typeof(pokemons) !== 'object') {
+    if (page === undefined || limit === undefined || typeof (pokemons) !== 'object') {
         throw new Error('No page or pokemons provided');
     }
 
@@ -38,7 +37,7 @@ export function getPokemon(id) {
 }
 
 export function savePokemon(id, pokemon) {
-    if (id === undefined || typeof(pokemon) !== 'object') {
+    if (id === undefined || typeof (pokemon) !== 'object') {
         throw new Error('No id or pokemon provided');
     }
 
