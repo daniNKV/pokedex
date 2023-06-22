@@ -3,7 +3,8 @@
         "browser": true,
         "es2021": true
     },
-    "extends": "airbnb-base",
+    "extends": [ "plugin:cypress/recommended",  "airbnb-base" ],
+
     "overrides": [
     ],
     "parserOptions": {
@@ -16,7 +17,5 @@
         // "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["el.textContent"] }]
         "no-param-reassign": "off",
         "no-tabs": ["error", { "allowIndentationTabs": true }]
-
-
     }
 }
