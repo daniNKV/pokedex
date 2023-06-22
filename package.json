@@ -9,7 +9,7 @@
     "cypress:open": "cypress open",
     "server:start": "http-server src/index.html",
     "test": "run-p build server:start cypress:open",
-    "dev": "run-s build:live server:start"
+    "dev": "run-p build:live server:start"
   },
   "repository": {
     "type": "git",

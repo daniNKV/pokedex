@@ -22,13 +22,12 @@ export function convertMetersToFeetAndInches(meters) {
 	const totalInches = meters * 39.3701;
 	const feet = Math.floor(totalInches / 12);
 	const inches = Math.round(totalInches % 12);
-	
+
 	return `${feet}'${inches}"`;
 }
 
 export function convertKgToLb(kg) {
 	return kg * 2.20462;
-
 }
 
 export function parseToThreeDigits(number) {
@@ -36,7 +35,7 @@ export function parseToThreeDigits(number) {
 		return `00${number.toString()}`;
 	} if (number < 100) {
 		return `0${number.toString()}`;
-	} 
+	}
 	return number.toString();
 }
 

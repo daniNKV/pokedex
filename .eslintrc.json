@@ -12,8 +12,11 @@
     },
     "rules": {
         "indent": ["error", "tab"],
-        "no-return-assign": ["except-parens", 2],
+        //"no-return-assign": ["except-parens", 2],
         // "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["el.textContent"] }]
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "no-tabs": ["error", { "allowIndentationTabs": true }]
+
+
     }
 }
