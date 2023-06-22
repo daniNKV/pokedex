@@ -1,6 +1,6 @@
-import PokeList from '../entities/PokeList';
-import Pokemon from '../entities/Pokemon';
-import Stat from '../entities/Stat';
+import PokeList from '../entities/PokemonList.js';
+import Pokemon from '../entities/Pokemon.js';
+import Stat from '../entities/Stat.js';
 
 export function mapPokemon(mainEndpoint = {}, specieEndpoint = {}) {
 	const {
@@ -45,11 +45,11 @@ export function mapPokemon(mainEndpoint = {}, specieEndpoint = {}) {
 	);
 }
 
-export function mapPokemonList(api, spriteCallback) {
+export function mapPokemonList(api, getSprite) {
 	const { count, results } = api;
 	return new PokeList(
 		count,
 		results.map((pokemon) => pokemon.name),
-		spriteCallback,
+		getSprite,
 	);
 }

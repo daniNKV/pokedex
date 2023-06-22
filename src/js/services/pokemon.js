@@ -12,7 +12,8 @@ import {
 	savePokemons,
 	savePokemon,
 } from './storage/pokemon.js';
-import { mapPokemon, mapPokemonList } from './mappers/pokemon';
+
+import { mapPokemon, mapPokemonList } from './mappers/pokemon.js';
 
 const POKEMONS_LIMIT = 20;
 
@@ -23,7 +24,9 @@ export async function getPokemons(page, limit = POKEMONS_LIMIT) {
 		return getPokemonsFromStorage(page);
 	} catch (e) {
 		const pokemonsApi = await getPokemonsFromApi(page);
+
 		pokemons = mapPokemonList(pokemonsApi, getPokemonSprite);
+
 		savePokemons(page, limit, pokemons);
 
 		return pokemons;
