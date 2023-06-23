@@ -1,19 +1,16 @@
-import { getPokemonSprite } from './services/api/pokemon.js';
 import { getPokemons, getPokemon } from './services/pokemon.js';
 import { initializePagination, handlePagination } from './ui/pagination.js';
-import initializePokemons from './ui/home.js';
+import updatePokemons from './ui/home.js';
 import initializePokemon from './ui/pokemon.js';
 
-async function initialize() {
+export default async function initialize() {
 	const FIRST_PAGE = 1;
 	const POKEMONS_PER_PAGE = 20;
 	const pokemons = await getPokemons(FIRST_PAGE, POKEMONS_PER_PAGE);
-	console.log(pokemons);
-	// initializePokemons(pokemons, getPokemonSprite);
-	initializePokemons(pokemons);
-	initializePagination(Math.ceil(pokemons.count / POKEMONS_PER_PAGE));
+	const TOTAL_PAGES = () => Math.ceil(pokemons.total / POKEMONS_PER_PAGE);
+	updatePokemons(pokemons);
+	initializePagination(TOTAL_PAGES());
 }
 
-document.addEventListener('load', initialize());
-document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e, { getPokemons, getPokemonSprite, fillPage }));
+document.getElementById('pagination').addEventListener('click', (e) => handlePagination(e, { getPokemons, updatePokemons }));
 document.getElementById('pokemons').addEventListener('click', (e) => initializePokemon(e, getPokemon));

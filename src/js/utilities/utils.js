@@ -42,11 +42,3 @@ export function parseToThreeDigits(number) {
 export function parseFromSnakeConvention(string) {
 	return capitalizeFirstLetter(string.replaceAll('_', ' '));
 }
-
-export function checkError(value, totalPages) {
-	if (Number.isInteger(value) && (value > 0 && value <= totalPages)) {
-		return true;
-	}
-
-	return false;
-}

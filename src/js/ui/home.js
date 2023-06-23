@@ -1,20 +1,15 @@
-import { capitalizeFirstLetter, getId, parseToThreeDigits } from '../utilities/utils.js';
-
-function createPokemonTile(pokemon, sprite) {
+function createPokemonTile(pokemon) {
 	const $template = document.getElementById('tile-template').content.cloneNode(true);
-
-	const { name, url } = pokemon;
-	const ID = getId(url);
-
-	$template.querySelector('p').textContent = capitalizeFirstLetter(name);
-	$template.querySelector('img').src = sprite(ID);
-	$template.querySelector('img').alt = capitalizeFirstLetter(name);
-	$template.querySelector('img').onerror = function () {
+	const { id, name, img } = pokemon;
+	function onError() {
 		this.onerror = null;
-		this.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${parseToThreeDigits(ID)}.png`;
-	};
-	$template.querySelector('img').dataset.id = ID;
-	$template.querySelector('div').dataset.id = ID;
+		this.src = img.backup;
+	}
+	$template.querySelector('p').textContent = name;
+	$template.querySelector('img').src = img.main;
+	$template.querySelector('img').alt = name;
+	$template.querySelector('img').onerror = onError;
+	$template.querySelector('div').dataset.id = id;
 
 	return $template;
 }
@@ -24,7 +19,12 @@ function append($pokemon) {
 	$pokemons.appendChild($pokemon);
 }
 
-export default function initializePokemons(pokemons, sprites) {
+export default function updatePokemons(pokemons) {
 	document.getElementById('pokemons').innerHTML = '';
-	pokemons.results.forEach((pokemon) => append(createPokemonTile(pokemon, sprites)));
+	const addTile = (pokemon, getImageUrl) => append(createPokemonTile({
+		id: pokemon.id,
+		name: pokemon.name,
+		img: getImageUrl(pokemon.id),
+	}));
+	pokemons.names.forEach((pokemon) => addTile(pokemon, pokemons.imagesUrl));
 }

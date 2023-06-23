@@ -1,3 +1,5 @@
+import { parseToThreeDigits } from '../../utilities/utils.js';
+
 const POKEMON_LIMIT = 20;
 const POKEMON_URL = 'https://pokeapi.co/api/v2/pokemon';
 
@@ -17,5 +19,8 @@ export async function getPokemonSpecie(id) {
 }
 
 export function getPokemonSprite(id) {
-	return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
+	return {
+		main: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`,
+		backup: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${parseToThreeDigits(id)}.png`,
+	};
 }

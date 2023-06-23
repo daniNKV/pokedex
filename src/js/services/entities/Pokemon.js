@@ -7,7 +7,6 @@ export default class Pokemon {
 		weight,
 		types = [],
 		stats = [],
-		sprites = [],
 		abilities = [],
 		eggGroups = [],
 		genderRate,
@@ -16,6 +15,8 @@ export default class Pokemon {
 		habitat,
 		shape,
 		color,
+		sprites,
+
 	) {
 		this.id = id;
 		this.xp = xp;
@@ -24,7 +25,6 @@ export default class Pokemon {
 		this.weight = weight;
 		this.types = types;
 		this.stats = stats;
-		this.sprites = sprites;
 		this.abilities = abilities;
 		this.eggGroups = eggGroups;
 		this.genderRate = genderRate;
@@ -33,5 +33,6 @@ export default class Pokemon {
 		this.habitat = habitat;
 		this.shape = shape;
 		this.color = color;
+		this.sprites = sprites;
 	}
 }

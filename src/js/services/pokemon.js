@@ -24,9 +24,7 @@ export async function getPokemons(page, limit = POKEMONS_LIMIT) {
 		return getPokemonsFromStorage(page);
 	} catch (e) {
 		const pokemonsApi = await getPokemonsFromApi(page);
-
 		pokemons = mapPokemonList(pokemonsApi, getPokemonSprite);
-
 		savePokemons(page, limit, pokemons);
 
 		return pokemons;
@@ -45,7 +43,7 @@ export async function getPokemon(id) {
 	} catch (e) {
 		const main = await getPokemonFromApi(id);
 		const specie = await getPokemonSpecieFromApi(id);
-		pokemon = mapPokemon(main, specie);
+		pokemon = mapPokemon(main, specie, getPokemonSprite(id));
 		savePokemon(id, pokemon);
 	}
 

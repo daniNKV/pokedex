@@ -1,8 +1,9 @@
 import PokeList from '../entities/PokemonList.js';
 import Pokemon from '../entities/Pokemon.js';
 import Stat from '../entities/Stat.js';
+import { capitalizeFirstLetter, getId } from '../../utilities/utils.js';
 
-export function mapPokemon(mainEndpoint = {}, specieEndpoint = {}) {
+export function mapPokemon(mainEndpoint = {}, specieEndpoint = {}, sprites) {
 	const {
 		id,
 		base_experience: xp,
@@ -11,7 +12,6 @@ export function mapPokemon(mainEndpoint = {}, specieEndpoint = {}) {
 		weight,
 		types,
 		stats,
-		sprites,
 		abilities,
 	} = mainEndpoint;
 
@@ -28,28 +28,35 @@ export function mapPokemon(mainEndpoint = {}, specieEndpoint = {}) {
 	return new Pokemon(
 		id,
 		xp,
-		name,
+		capitalizeFirstLetter(name),
 		height,
 		weight,
 		types.map((item) => item.type.name),
 		stats.map((item) => new Stat(item.stat.name, item.base_stat)),
-		sprites,
-		abilities.map((item) => item.ability.name),
-		eggGroups.map((group) => group.name),
+		abilities.map((item) => capitalizeFirstLetter(item.ability.name)),
+		eggGroups.map((group) => capitalizeFirstLetter(group.name)),
 		genderRate,
-		generation.name,
-		growthRate.name,
-		habitat.name,
-		shape.name,
-		color.name,
+		capitalizeFirstLetter(generation.name),
+		capitalizeFirstLetter(growthRate.name),
+		capitalizeFirstLetter(habitat.name),
+		capitalizeFirstLetter(shape.name),
+		capitalizeFirstLetter(color.name),
+		sprites,
 	);
 }
 
 export function mapPokemonList(api, getSprite) {
 	const { count, results } = api;
+
 	return new PokeList(
 		count,
-		results.map((pokemon) => pokemon.name),
+		results.map((pokemon) => {
+			const { name, url } = pokemon;
+			return {
+				id: getId(url),
+				name: capitalizeFirstLetter(name),
+			};
+		}),
 		getSprite,
 	);
 }

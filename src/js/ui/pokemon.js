@@ -3,89 +3,11 @@ import {
 	parseToThreeDigits,
 	convertMetersToFeetAndInches,
 	convertKgToLb,
-	getPropertyValue,
 	parseFromSnakeConvention,
 } from '../utilities/utils.js';
 import {
 	showPokemonInformation, appendToMain, appendTags, hidePokemons,
 } from './dom.js';
-
-function showPokemon(basic, breeding) {
-	appendToMain(createSection());
-	makeHero(basic);
-	makeAbout(basic);
-	makeBreeding(breeding);
-	makeStats(basic.stats);
-	showPokemonInformation();
-}
-
-export default async function initializePokemon(e, callback) {
-	const ID = e.target.dataset.id;
-	const { main, specie } = await callback(ID);
-	hidePokemons();
-	showPokemon(main, specie);
-
-	document.getElementById('nav-info').onclick = handleNavigation;
-}
-
-function makeHero(pokemonProfile) {
-	const {
-		name, id, sprites, types,
-	} = pokemonProfile;
-	const $name = document.getElementById('pokemon-name');
-	const $id = document.getElementById('pokemon-id');
-	const $img = document.getElementById('pokemon-image');
-	const $tags = document.getElementById('tags');
-	$img.onerror = function () {
-		this.onerror = null;
-		this.src = sprites.other['official-artwork'].front_default;
-	};
-	$name.textContent = capitalizeFirstLetter(name);
-	$id.textContent = `#${parseToThreeDigits(id)}`;
-	$img.src = sprites.other.dream_world.front_default;
-	appendTags($tags, createTags(getTagsNames(types)));
-}
-
-function makeAbout(pokemonAttributes) {
-	const {
-		height, weight, abilities, base_experience,
-	} = pokemonAttributes;
-	const items = {
-		Experience: base_experience,
-		Height: `${height * 10} cm (${convertMetersToFeetAndInches(height / 10)})`,
-		Weight: `${weight / 10} kg (${convertKgToLb(weight / 10).toFixed(2)} lb)`,
-		Abilities: getPropertyValue(abilities, 'ability'),
-	};
-
-	const $about = document.getElementById('basic-info');
-
-	Object.entries(items).forEach((item) => $about.appendChild(createItem(item[0], item[1])));
-}
-
-function makeBreeding(specieInformation) {
-	const {
-		egg_groups, gender_rate, growth_rate, habitat,
-	} = specieInformation;
-	const items = {
-		Habitat: habitat.name,
-		'Egg Groups': getPropertyValue(egg_groups, 'name'),
-		'Growth Rate': growth_rate.name,
-	};
-
-	const $breeding = document.getElementById('breeding-info');
-	$breeding.appendChild(createGenderElement(getGenderProbability(gender_rate)));
-
-	Object.entries(items).forEach((item) => $breeding.appendChild(createItem(item[0], capitalizeFirstLetter(item[1]))));
-}
-
-function createGenderElement(genderProbabilities) {
-	const $genders = document.getElementById('gender-template').content.cloneNode(true);
-
-	$genders.getElementById('mars').textContent = `${genderProbabilities[0]}% `;
-	$genders.getElementById('venus').textContent = `${genderProbabilities[1]}% `;
-
-	return $genders;
-}
 
 function createSection() {
 	return document.getElementById('pokemon-info-template').content.cloneNode(true);
@@ -102,27 +24,81 @@ function createItem(name, value) {
 
 function createTags(names) {
 	const $tagTemplate = document.getElementById('tag-template').content;
-
-	return Array.from(names, (name) => {
+	return names.map((name) => {
 		const $newTag = $tagTemplate.querySelector('li').cloneNode(true);
 		$newTag.textContent = capitalizeFirstLetter(name);
-
 		return $newTag;
 	});
 }
 
-function getTagsNames(pokemonTypes) {
-	return Array.from(pokemonTypes, (tag) => tag.type.name);
+function makeHero(pokemon) {
+	const {
+		name, id, types, sprites,
+	} = pokemon;
+	const $name = document.getElementById('pokemon-name');
+	const $id = document.getElementById('pokemon-id');
+	const $img = document.getElementById('pokemon-image');
+	const $tags = document.getElementById('tags');
+	function onError() {
+		this.onerror = null;
+		this.src = sprites.backup;
+	}
+	$img.onerror = onError;
+	$name.textContent = name;
+	$id.textContent = `#${parseToThreeDigits(id)}`;
+	$img.src = sprites.main;
+	appendTags($tags, createTags(types));
 }
 
-function makeStats(pokemonStats) {
-	const $statsElement = document.getElementById('stats');
-	const $statItem = document.getElementById('stats-item-template');
-	const $statTotalItem = document.getElementById('stats-total-template');
-	const totalStats = pokemonStats.map((item) => item.base_stat).reduce((a, b) => a + b);
+function makeAbout(pokemon) {
+	const {
+		height, weight, abilities, xp,
+	} = pokemon;
+	const items = {
+		Experience: xp,
+		Height: `${height * 10} cm (${convertMetersToFeetAndInches(height / 10)})`,
+		Weight: `${weight / 10} kg (${convertKgToLb(weight / 10).toFixed(2)} lb)`,
+		Abilities: abilities.join(', '),
+	};
 
-	pokemonStats.forEach((pokemonStat) => $statsElement.appendChild(createStat($statItem, pokemonStat.stat.name, pokemonStat.base_stat)));
-	$statsElement.appendChild(createStat($statTotalItem, 'Total', totalStats));
+	const $about = document.getElementById('basic-info');
+
+	Object.entries(items).forEach((item) => $about.appendChild(createItem(item[0], item[1])));
+}
+
+function createGenderElement(genderProbabilities) {
+	const $genders = document.getElementById('gender-template').content.cloneNode(true);
+
+	$genders.getElementById('mars').textContent = `${genderProbabilities[0]}% `;
+	$genders.getElementById('venus').textContent = `${genderProbabilities[1]}% `;
+
+	return $genders;
+}
+
+function getGenderProbability(genderRate) {
+	if (genderRate !== -1) {
+		const femaleChance = (genderRate / 8) * 100;
+		const maleChance = (femaleChance === 100) ? 0 : 100 - femaleChance;
+
+		return [maleChance, femaleChance];
+	}
+	return [0, 0];
+}
+
+function makeBreeding(pokemon) {
+	const {
+		eggGroups, genderRate, growthRate, habitat,
+	} = pokemon;
+	const items = {
+		Habitat: habitat,
+		'Egg Groups': eggGroups.join(', '),
+		'Growth Rate': growthRate,
+	};
+	const $breeding = document.getElementById('breeding-info');
+	$breeding.appendChild(createGenderElement(getGenderProbability(genderRate)));
+	Object.entries(items).forEach((item) => {
+		$breeding.appendChild(createItem(item[0], capitalizeFirstLetter(item[1])));
+	});
 }
 
 function createStat(template, name, value) {
@@ -133,6 +109,16 @@ function createStat(template, name, value) {
 	$stat.querySelector('progress').value = value;
 
 	return $stat;
+}
+
+function makeStats(stats) {
+	const $statsElement = document.getElementById('stats');
+	const $statItem = document.getElementById('stats-item-template');
+	const $statTotalItem = document.getElementById('stats-total-template');
+	const totalStats = stats.map((item) => item.value).reduce((a, b) => a + b);
+
+	stats.forEach((stat) => $statsElement.appendChild(createStat($statItem, stat.name, stat.value)));
+	$statsElement.appendChild(createStat($statTotalItem, 'Total', totalStats));
 }
 
 function handleNavigation(e) {
@@ -153,12 +139,23 @@ function handleNavigation(e) {
 	}
 }
 
-function getGenderProbability(genderRate) {
-	if (genderRate !== -1) {
-		const femaleChance = (genderRate / 8) * 100;
-		const maleChance = (femaleChance === 100) ? 0 : 100 - femaleChance;
+function showPokemon(pokemon) {
+	appendToMain(createSection());
+	makeHero(pokemon);
+	makeAbout(pokemon);
+	makeBreeding(pokemon);
+	makeStats(pokemon.stats);
+	showPokemonInformation();
+}
 
-		return [maleChance, femaleChance];
-	}
-	return [0, 0];
+export default async function initializePokemon(e, getPokemon) {
+	const $card = e.target.closest('div');
+	if (!$card) return;
+
+	const ID = $card.dataset.id;
+	const pokemon = await getPokemon(ID);
+	hidePokemons();
+	showPokemon(pokemon);
+
+	document.getElementById('nav-info').onclick = handleNavigation;
 }

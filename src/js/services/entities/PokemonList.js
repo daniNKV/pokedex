@@ -1,11 +1,11 @@
 export default class PokemonList {
 	constructor(
 		total = 0,
-		names = [],
+		pokemons = [{ id: 0, name: '' }],
 		imagesUrl,
 	) {
 		this.total = total;
-		this.names = names;
+		this.names = pokemons;
 		this.imagesUrl = imagesUrl;
 	}
 }
