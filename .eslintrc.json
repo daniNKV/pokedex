@@ -11,11 +11,12 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "plugins": ["import"],
     "rules": {
-        "indent": ["error", "tab"],
-        //"no-return-assign": ["except-parens", 2],
+      "import/extensions": "off",
+      "indent": ["error", 4],
+      //"no-return-assign": ["except-parens", 2],
         // "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["el.textContent"] }]
-        "no-param-reassign": "off",
-        "no-tabs": ["error", { "allowIndentationTabs": true }]
+        "no-param-reassign": "off"
     }
 }
