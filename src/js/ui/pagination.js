@@ -47,32 +47,29 @@ function goToPage(destination = 1, last = 1, seek) {
         .then(() => setCurrent(destination));
 }
 
-export function initializePagination(totalPages) {
+export function initializePagination(pokemonsPerPage) {
     const FIRST_PAGE = 1;
-    document.getElementById('total-pages').textContent = totalPages;
+    const { totalPages } = document.getElementById('pokemons').dataset;
+    const TOTAL_PAGES = () => Math.ceil(totalPages / pokemonsPerPage).toString();
+
+    document.getElementById('total-pages').textContent = TOTAL_PAGES();
     document.getElementById('previous-button').classList.add('hidden');
     setCurrent(FIRST_PAGE);
 }
 
-export function handlePagination(event, callbacks) {
+export function handlePagination(event, callback) {
     event.preventDefault();
-    const { getPokemons, updatePokemons } = callbacks;
     const actualPage = Number(document.getElementById('pagination').dataset.selected);
     const totalPages = Number(document.getElementById('total-pages').textContent);
     const buttonClicked = event.target.dataset.button;
-    async function seek(page) {
-        const pokemons = await getPokemons(page);
-        updatePokemons(pokemons);
-    }
-
     if (buttonClicked === 'next') {
-        setNextPage(actualPage, totalPages, seek);
+        setNextPage(actualPage, totalPages, callback);
     } else if (buttonClicked === 'previous') {
-        setPreviousPage(actualPage, totalPages, seek);
+        setPreviousPage(actualPage, totalPages, callback);
     } else if (buttonClicked === 'seek') {
         const selection = Number(document.getElementById('page-selection').value);
         if (checkError(selection, totalPages)) {
-            goToPage(selection, totalPages, seek);
+            goToPage(selection, totalPages, callback);
         } else {
             showPaginationError();
         }

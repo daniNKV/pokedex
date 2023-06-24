@@ -4,7 +4,10 @@ import {
     convertKgToLb,
 } from '../utilities/utils.js';
 import {
-    showPokemonInformation, appendToMain, appendTags, hidePokemons,
+    showPokemonInformation,
+    appendToMain,
+    appendTags,
+    hidePokemonGrid,
 } from './dom.js';
 
 function createSection() {
@@ -147,22 +150,24 @@ function handleNavigation(e) {
     }
 }
 
-function showPokemon(pokemon) {
+async function showPokemon(id, getPokemon) {
+    const pokemon = await getPokemon(id);
+
     appendToMain(createSection());
     makeHero(pokemon);
     makeAbout(pokemon);
     makeBreeding(pokemon);
     makeStats(pokemon.stats);
     showPokemonInformation();
+
+    document.getElementById('nav-info').onclick = handleNavigation;
 }
 
-export default async function initializePokemon(e, getPokemon) {
+export default function initializePokemon(e, getPokemon) {
     const $card = e.target.closest('div');
     if (!$card) return;
     const ID = $card.dataset.id;
-    const pokemon = await getPokemon(ID);
-    hidePokemons();
-    showPokemon(pokemon);
 
-    document.getElementById('nav-info').onclick = handleNavigation;
+    showPokemon(ID, getPokemon)
+        .then(() => hidePokemonGrid());
 }

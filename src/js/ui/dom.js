@@ -18,7 +18,7 @@ export function showPokemonInformation() {
     document.getElementById('close').addEventListener('click', showPokemons);
 }
 
-export function hidePokemons() {
+export function hidePokemonGrid() {
     document.getElementById('pokemons').classList.add('hidden');
     document.getElementById('pagination').classList.add('hidden');
 }

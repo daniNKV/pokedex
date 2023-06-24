@@ -19,12 +19,24 @@ function append($pokemon) {
     $pokemons.appendChild($pokemon);
 }
 
-export default function updatePokemons(pokemons) {
-    document.getElementById('pokemons').innerHTML = '';
+function show(pokemons) {
+    const $pokemons = document.getElementById('pokemons');
+    if (!$pokemons.dataset.totalPages) {
+        $pokemons.dataset.totalPages = pokemons.total;
+    }
+    $pokemons.innerHTML = '';
+
     const addTile = (pokemon, getImageUrl) => append(createPokemonTile({
         id: pokemon.id,
         name: pokemon.name,
         img: getImageUrl(pokemon.id),
     }));
     pokemons.names.forEach((pokemon) => addTile(pokemon, pokemons.imagesUrl));
+}
+
+export default function updatePokemonGrid(callback) {
+    return async (page) => {
+        const pokemons = await callback(page);
+        show(pokemons);
+    };
 }
