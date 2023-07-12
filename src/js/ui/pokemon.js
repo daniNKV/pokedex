@@ -164,7 +164,7 @@ async function showPokemon(id, getPokemon) {
 }
 
 export default function initializePokemon(e, getPokemon) {
-    const $card = e.target.closest('div');
+    const $card = e.target.closest('div .pokemon-card');
     if (!$card) return;
     const ID = $card.dataset.id;
 
